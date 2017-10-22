@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-17T10:19:05.649Z</updated>
+  <updated>2017-10-22T15:29:31.664Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>区区一个死宅</title>
+    <link href="http://yoursite.com/2017/10/22/%E5%8C%BA%E5%8C%BA%E4%B8%80%E4%B8%AA%E6%AD%BB%E5%AE%85/"/>
+    <id>http://yoursite.com/2017/10/22/区区一个死宅/</id>
+    <published>2017-10-22T15:29:46.490Z</published>
+    <updated>2017-10-22T15:29:31.664Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="10-23"><a href="#10-23" class="headerlink" title="10.23"></a>10.23</h1><p>风和日丽，日月乾坤。走向毕业的脚步，温扰了我写代码的思路。纵然有bug寻百度，踏平脚下路，蓦然回首细环顾，依旧bug无数。索性关掉编辑器，还我一份清静。<br><img src="/images/bir/ai.png" alt="image"></p><p>突然一个闹钟响起来。上面写着<br>”今晚请友人j，友人s去吃宵夜。”<br>内心本是不住的抽搐。</p><p>……看了视频，拍了毕业照，晚上就到了。</p><p>微信一call，结果友人A、B竟然在学校外面，索性把我也叫出去，吃我一顿大的。<br><img src="/images/bir/ku.png" alt="image"></p><p>然后我们就去吃鸡了，是真的鸡。。众人（啪叽啪叽地吃完）<br><img src="/images/bir/chiji.jpg" alt="image"></p><p>吃完心想回去看两视频就好好睡觉。然后友人叫我去走操场，那走吧~ ~ 十几个G的框架视频也不差这会儿看。<br><img src="/images/bir/ai.jpg" alt="image"></p><p>还没走完一圈，刚掉队的去买水喝的两人回来了，手还提着个蛋糕，没错，今天是我农历生日（滑稽）。<br><img src="/images/bir/dangao.jpg" alt="image"></p><p>讲道理，我本是就把那餐饭当做庆生的。结果还有个蛋糕（内心美滋滋，表面害怕.gif）。 然后我们就去操场一个角落里围起来坐着手起刀落切好蛋糕，众人（啪叽啪叽地吃完）</p><p>总之，很感谢两位友人JS给我庆生的。这大概是即将变为社畜的我前，在大学里最好的memory了。<br><img src="/images/bir/wo.jpg" alt="image"></p><p>还有个很纠结的问题，就是友人J问我有没把J S当女的看。”那肯定啊，还是小仙女，如果要加上个期限，那么仅限今晚”<img src="/images/bir/heihei.png" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;10-23&quot;&gt;&lt;a href=&quot;#10-23&quot; class=&quot;headerlink&quot; title=&quot;10.23&quot;&gt;&lt;/a&gt;10.23&lt;/h1&gt;&lt;p&gt;风和日丽，日月乾坤。走向毕业的脚步，温扰了我写代码的思路。纵然有bug寻百度，踏平脚下路，蓦然回首细环顾，依旧bug
+      
+    
+    </summary>
+    
+      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="日常" scheme="http://yoursite.com/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+  </entry>
   
   <entry>
     <title>JavaScript — 动态规划&amp;&amp;贪心算法</title>
