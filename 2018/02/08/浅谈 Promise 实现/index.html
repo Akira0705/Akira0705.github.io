@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Akira" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言不知道Promise是啥的，请看上一篇《异步流程控制》  看了不少Prmose实现的资料，目前的理解就是Promise也就是回调的一种优雅实现。 现在Javascript的重心都放在了async-await，而async-await是建立在Promise之上的，所以深入一下Promise，还是很有必要的。 实现功能分析原生Promise12345678910111213141516171819">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Re0：从零开始的JavaScript - 浅谈 Promise 实现">
+<meta property="og:url" content="http://yoursite.com/2018/02/08/浅谈 Promise 实现/index.html">
+<meta property="og:site_name" content="Akira">
+<meta property="og:description" content="前言不知道Promise是啥的，请看上一篇《异步流程控制》  看了不少Prmose实现的资料，目前的理解就是Promise也就是回调的一种优雅实现。 现在Javascript的重心都放在了async-await，而async-await是建立在Promise之上的，所以深入一下Promise，还是很有必要的。 实现功能分析原生Promise12345678910111213141516171819">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518104916999&di=94b7d10517a6ca51f49b11685b9e72ae&imgtype=0&src=http%3A%2F%2F0.pic.9ht.com%2Fthumb%2Fup%2F2016-7%2F14691557622361722_600_566.jpg">
+<meta property="og:image" content="http://img2.biaoqingjia.com/biaoqing/201607/3f2690479687e671fcc2b2a70c185e8c.gif">
+<meta property="og:updated_time" content="2018-02-08T13:07:41.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Re0：从零开始的JavaScript - 浅谈 Promise 实现">
+<meta name="twitter:description" content="前言不知道Promise是啥的，请看上一篇《异步流程控制》  看了不少Prmose实现的资料，目前的理解就是Promise也就是回调的一种优雅实现。 现在Javascript的重心都放在了async-await，而async-await是建立在Promise之上的，所以深入一下Promise，还是很有必要的。 实现功能分析原生Promise12345678910111213141516171819">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518104916999&di=94b7d10517a6ca51f49b11685b9e72ae&imgtype=0&src=http%3A%2F%2F0.pic.9ht.com%2Fthumb%2Fup%2F2016-7%2F14691557622361722_600_566.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/08/浅谈 Promise 实现/"/>
+
+
+
+
+
+  <title>Re0：从零开始的JavaScript - 浅谈 Promise 实现 | Akira</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -30px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/miku/miku.model.json",0.5)</script>
+  
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+		<a href="https://github.com/Akira0705"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Akira</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/08/浅谈 Promise 实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Akira">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Akira">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Re0：从零开始的JavaScript - 浅谈 Promise 实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-08T21:08:18+08:00">
+                2018-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  990
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>不知道Promise是啥的，请看上一篇《异步流程控制》</p>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1518104916999&amp;di=94b7d10517a6ca51f49b11685b9e72ae&amp;imgtype=0&amp;src=http%3A%2F%2F0.pic.9ht.com%2Fthumb%2Fup%2F2016-7%2F14691557622361722_600_566.jpg" alt="image"></p>
+<p>看了不少Prmose实现的资料，目前的理解就是Promise也就是回调的一种优雅实现。</p>
+<p>现在Javascript的重心都放在了async-await，而async-await是建立在Promise之上的，所以深入一下Promise，还是很有必要的。</p>
+<h1 id="实现功能分析"><a href="#实现功能分析" class="headerlink" title="实现功能分析"></a>实现功能分析</h1><p>原生Promise<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">new Promise(function (resolve,reject)&#123;</div><div class="line">    </div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        console.log(1)</div><div class="line">        resolve(2)</div><div class="line">    &#125;,1000)</div><div class="line"></div><div class="line">&#125;).then(function (val)&#123;</div><div class="line"></div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        console.log(&apos;2:&apos;+val)</div><div class="line">    &#125;,1000)</div><div class="line"></div><div class="line">&#125;).then(function (val)&#123;</div><div class="line"></div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        console.log(&apos;3:&apos;+val)</div><div class="line">    &#125;,1000)</div><div class="line"></div><div class="line">&#125;)</div><div class="line"></div><div class="line">// 1</div><div class="line">// 2:2</div><div class="line">// 3:und</div></pre></td></tr></table></figure></p>
+<h1 id="开始实现"><a href="#开始实现" class="headerlink" title="开始实现"></a>开始实现</h1><p><img src="http://img2.biaoqingjia.com/biaoqing/201607/3f2690479687e671fcc2b2a70c185e8c.gif" alt="image"></p>
+<p>创建一个_promise函数，由简到繁</p>
+<h2 id="简单功能"><a href="#简单功能" class="headerlink" title="简单功能"></a>简单功能</h2><h3 id="源码"><a href="#源码" class="headerlink" title="源码:"></a>源码:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function _promise(fn)&#123;</div><div class="line">  //resolve时的回调</div><div class="line">  var callback;</div><div class="line">  </div><div class="line">  //一个实例的方法，用来注册异步事件</div><div class="line">  this.then = function(done)&#123;</div><div class="line">    callback = done;</div><div class="line">  &#125;</div><div class="line">  function resolve(val)&#123;</div><div class="line">    callback(val);</div><div class="line">  &#125;</div><div class="line">  fn(resolve);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用："><a href="#使用：" class="headerlink" title="使用："></a>使用：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">new _promise(function (resolve)&#123;</div><div class="line"></div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        console.log(1)</div><div class="line">        resolve(2)</div><div class="line">    &#125;,1000)</div><div class="line"></div><div class="line">&#125;).then(function (val)&#123;</div><div class="line"></div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        console.log(&apos;2:&apos;+val)</div><div class="line">    &#125;,1000)</div><div class="line"></div><div class="line">&#125;)</div><div class="line">// 1</div><div class="line">// 2:2</div></pre></td></tr></table></figure>
+<h3 id="步骤分析："><a href="#步骤分析：" class="headerlink" title="步骤分析："></a>步骤分析：</h3><ol>
+<li>传入fn执行，并调用then方法传入异步执行完毕后的函数赋值给Promise内部的callback</li>
+<li>Promise内部fn执行并将resolve函数作为参数传入</li>
+<li>fn执行到成功位置，执行resolve函数并传入成功值(val)</li>
+<li>resolve函数执行回调callback并传入成功值</li>
+</ol>
+<hr>
+<h2 id="链式支持"><a href="#链式支持" class="headerlink" title="链式支持"></a>链式支持</h2><h3 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h3><p>在then中返回this，并把then的回调存放到$resolve数组中，执行resolve使用forEach依次调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function _promise(fn)&#123;</div><div class="line">    // resolve时的回调</div><div class="line">    var promise = this,</div><div class="line">        value = null,</div><div class="line">        promise.$resolve = [] // 存放需要调用的函数</div><div class="line"></div><div class="line">    //  返回this，支持链式调用</div><div class="line">    this.then = function (onFulfilled)&#123;</div><div class="line">        promise.$resolve.push(onFulfilled)</div><div class="line">        return this</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 成功回调，把$resolve存放的函数依次执行</div><div class="line">    function resolve(value)&#123;</div><div class="line">        promise.$resolve.forEach(function (callback)&#123;</div><div class="line">            callback(value)</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    fn(resolve)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可是如果then中的传入函数是同步的话，就无法控制回调执行顺序</p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">new _promise(function (resolve)&#123;</div><div class="line">    </div><div class="line">    for(var i = 0,num; i &lt; 1000;i++)&#123;</div><div class="line">        num=Math.random()*100</div><div class="line">    &#125;</div><div class="line">    console.log(1)</div><div class="line">    resolve(2)</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;).then(function (val)&#123;</div><div class="line"></div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        console.log(&apos;2:&apos;+val)</div><div class="line">    &#125;,1000)</div><div class="line">        </div><div class="line"></div><div class="line">&#125;).then(function (val)&#123;</div><div class="line"></div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        console.log(&apos;3:&apos;+val)</div><div class="line">    &#125;,1000)</div><div class="line"></div><div class="line">&#125;)</div><div class="line">// 1</div></pre></td></tr></table></figure>
+<p>只会执行fn，回调都没有执行,因为这时在resolve比then先执行,这时候promise.$resolve数组是空数组，所以上面代码只打印了一个1。我们需要把resolve放到下一个任务队列末尾执行，也就是then的回调都添加到了数组中之后</p>
+<p>修改resolve函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function resolve(value)&#123;</div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        promise.$resolve.forEach(function (callback)&#123;</div><div class="line">            callback(value)</div><div class="line">        &#125;)</div><div class="line">    &#125;,0)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="引入状态"><a href="#引入状态" class="headerlink" title="引入状态"></a>引入状态</h2><h3 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h3><p>每个 Promise 存在三个互斥状态：pending、fulfilled、rejected。Promise 对象的状态改变，只有两种可能：从 pending 变为 fulfilled 和从 pending 变为 rejected。只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果。就算改变已经发生了，你再对 Promise 对象添加回调函数，也会立即得到这个结果。</p>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><p>promise.value保存之后调用该对象回调的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">function _promise(fn)&#123;</div><div class="line">    // 成功的回调</div><div class="line">    var promise = this</div><div class="line">        promise.value = null</div><div class="line">        promise.$resolve = [],</div><div class="line">        promise.$status = &apos;PENDING&apos;</div><div class="line"></div><div class="line">    this.then = function (onFulfilled)&#123;</div><div class="line">        if(promise.$status === &apos;PENDING&apos;)&#123;</div><div class="line">            promise.$resolve.push(onFulfilled)</div><div class="line">            return this</div><div class="line">        &#125;</div><div class="line">        onFulfilled(promise.value)</div><div class="line">        return this</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    function resolve(value)&#123;</div><div class="line">        setTimeout(function ()&#123;</div><div class="line">            promise.$status = &quot;FULFILLED&quot;;</div><div class="line">            promise.$resolve.forEach(function (callback)&#123;</div><div class="line">                callback(value)</div><div class="line">                promise.value = value</div><div class="line">            &#125;)</div><div class="line">        &#125;,0)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    fn(resolve)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="使用：-1"><a href="#使用：-1" class="headerlink" title="使用："></a>使用：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">let a = new _promise(function (resolve)&#123;</div><div class="line"></div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        console.log(&apos;1:&apos;)</div><div class="line">        resolve(2)</div><div class="line">    &#125;,1000)</div><div class="line"></div><div class="line">&#125;)</div><div class="line"></div><div class="line">a.then(function (val)&#123;</div><div class="line">    console.log(&apos;2:&apos;+val)</div><div class="line">&#125;)</div><div class="line"></div><div class="line">// 1</div><div class="line">// 2:2</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="异步回调返回的结果传递到下一个回调"><a href="#异步回调返回的结果传递到下一个回调" class="headerlink" title="异步回调返回的结果传递到下一个回调"></a>异步回调返回的结果传递到下一个回调</h2><p>修改resolve函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function resolve(value)&#123;</div><div class="line">    setTimeout(function ()&#123;</div><div class="line">        promise.$status = &quot;FULFILLED&quot;;</div><div class="line">        promise.$resolve.forEach(function (callback)&#123;</div><div class="line">            value = callback(value)</div><div class="line">            promise.value = value</div><div class="line">        &#125;)</div><div class="line">    &#125;,0)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>即可</p>
+<h2 id="失败处理"><a href="#失败处理" class="headerlink" title="失败处理"></a>失败处理</h2><p>异步操作不可能都成功，在异步操作失败时，标记其状态为 rejected，并执行注册的失败回调。</p>
+<p>有了之前处理 fulfilled 状态的经验，支持错误处理变得很容易。毫无疑问的是，在注册回调、处理状态变更上都要加入新的逻辑：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">this.then = function (onFulfilled, onRejected)&#123;</div><div class="line">    return new _promise(function (resolve)&#123;</div><div class="line">        function handle(value)&#123;</div><div class="line">            var ret = typeof onFulfilled === &apos;function&apos; &amp;&amp; onFulfilled(value) || value;</div><div class="line">            resolve(ret)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        function errback(reason)&#123;</div><div class="line">            reason =  typeof onRejected === &apos;function&apos; &amp;&amp; onRejected(reason) || reason;</div><div class="line">            reject(reason)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if(promise.$status === &apos;PENDING&apos;)&#123;</div><div class="line">            promise.$resolves.push(handle)</div><div class="line">            promise.$rejects.push(errback)</div><div class="line">        &#125; else if (promise.$status === &apos;FULFILLED&apos;) &#123;</div><div class="line">            handle(promise.$value)</div><div class="line">        &#125; else if (promise.$status === &apos;REJECTED&apos;) &#123;</div><div class="line">            errback(promise.$reason)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+	
+	<div>
+	  
+	    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束感谢您的阅读-------------</div>
+    
+</div>
+	  
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/08/Re0：从零开始的JavaScript - 异步流程控制/" rel="next" title="Re0：从零开始的JavaScript - 异步流程控制">
+                <i class="fa fa-chevron-left"></i> Re0：从零开始的JavaScript - 异步流程控制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+         <!--MOB SHARE BEGIN-->
+    <div class="-mob-share-ui-button -mob-share-open">分享</div>
+                                <div class="-mob-share-ui" style="display: none">
+                                    <ul class="-mob-share-list">
+                                        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+                                        <li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>
+                                        <li class="-mob-share-qzone"><p>QQ空间</p></li>
+                                        <li class="-mob-share-qq"><p>QQ好友</p></li>
+                                        <li class="-mob-share-weixin"><p>微信</p></li>
+                                        <li class="-mob-share-douban"><p>豆瓣</p></li>
+                                        <li class="-mob-share-renren"><p>人人网</p></li>
+                                        <li class="-mob-share-kaixin"><p>开心网</p></li>
+                                        <li class="-mob-share-facebook"><p>Facebook</p></li>
+                                        <li class="-mob-share-twitter"><p>Twitter</p></li>
+                                        <li class="-mob-share-pocket"><p>Pocket</p></li>
+                                        <li class="-mob-share-google"><p>Google+</p></li>
+                                        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+                                        <li class="-mob-share-mingdao"><p>明道</p></li>
+                                        <li class="-mob-share-pengyou"><p>朋友网</p></li>
+                                        <li class="-mob-share-tumblr"><p>Tumblr</p></li>
+                                        <li class="-mob-share-instapaper"><p>Instapaper</p></li>
+                                        <li class="-mob-share-linkedin"><p>LinkedIn</p></li>
+                                    </ul>
+                                    <div class="-mob-share-close">取消</div>
+                                </div>
+                                <div class="-mob-share-ui-bg"></div>
+                                <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=21b10bbc8adca"></script>
+                                <!--MOB SHARE END-->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Akira" />
+          <p class="site-author-name" itemprop="name">Akira</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现功能分析"><span class="nav-number">2.</span> <span class="nav-text">实现功能分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始实现"><span class="nav-number">3.</span> <span class="nav-text">开始实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单功能"><span class="nav-number">3.1.</span> <span class="nav-text">简单功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#源码"><span class="nav-number">3.1.1.</span> <span class="nav-text">源码:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用："><span class="nav-number">3.1.2.</span> <span class="nav-text">使用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#步骤分析："><span class="nav-number">3.1.3.</span> <span class="nav-text">步骤分析：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链式支持"><span class="nav-number">3.2.</span> <span class="nav-text">链式支持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现："><span class="nav-number">3.2.1.</span> <span class="nav-text">实现：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引入状态"><span class="nav-number">3.3.</span> <span class="nav-text">引入状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析："><span class="nav-number">3.3.1.</span> <span class="nav-text">分析：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码："><span class="nav-number">3.3.2.</span> <span class="nav-text">源码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用：-1"><span class="nav-number">3.3.3.</span> <span class="nav-text">使用：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步回调返回的结果传递到下一个回调"><span class="nav-number">3.4.</span> <span class="nav-text">异步回调返回的结果传递到下一个回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#失败处理"><span class="nav-number">3.5.</span> <span class="nav-text">失败处理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Akira</span>
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  1225658998@qq.com
+</div>
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
