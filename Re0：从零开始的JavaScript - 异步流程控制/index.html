@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Akira" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言：在异步编程中，一直在使用Promise。期间一直想做个深入的研究，无奈一直比较忙（懒），今天总算是抽出时间（上班偷懒）来总结一下：  参考资料： 《你不知道的JavaScript》 - 中卷  《体验异步的终极解决方案-ES7的Async/Await》(https://cnodejs.org/topic/5640b80d3a6aa72c5e0030b6) 《ES6入门》 (http://es">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Re0：从零开始的JavaScript - 异步流程控制">
+<meta property="og:url" content="http://akira.wang/Re0：从零开始的JavaScript - 异步流程控制/index.html">
+<meta property="og:site_name" content="Akira">
+<meta property="og:description" content="前言：在异步编程中，一直在使用Promise。期间一直想做个深入的研究，无奈一直比较忙（懒），今天总算是抽出时间（上班偷懒）来总结一下：  参考资料： 《你不知道的JavaScript》 - 中卷  《体验异步的终极解决方案-ES7的Async/Await》(https://cnodejs.org/topic/5640b80d3a6aa72c5e0030b6) 《ES6入门》 (http://es">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2786325316,2806414041&fm=27&gp=0.jpg">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/147516-3bb56611ec38dcce.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+<meta property="og:image" content="http://pic.qqtn.com/up/2016-5/2016050509212091713.jpg">
+<meta property="og:image" content="http://pic.qqtn.com/up/2016-5/2016050509212011462.jpg">
+<meta property="og:image" content="http://uploads.5068.com/allimg/170417/1-1F41G60100.gif">
+<meta property="og:updated_time" content="2018-02-08T13:07:13.996Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Re0：从零开始的JavaScript - 异步流程控制">
+<meta name="twitter:description" content="前言：在异步编程中，一直在使用Promise。期间一直想做个深入的研究，无奈一直比较忙（懒），今天总算是抽出时间（上班偷懒）来总结一下：  参考资料： 《你不知道的JavaScript》 - 中卷  《体验异步的终极解决方案-ES7的Async/Await》(https://cnodejs.org/topic/5640b80d3a6aa72c5e0030b6) 《ES6入门》 (http://es">
+<meta name="twitter:image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2786325316,2806414041&fm=27&gp=0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://akira.wang/Re0：从零开始的JavaScript - 异步流程控制/"/>
+
+
+
+
+
+  <title>Re0：从零开始的JavaScript - 异步流程控制 | Akira</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -30px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/miku/miku.model.json",0.5)</script>
+  
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+		<a href="https://github.com/Akira0705"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Akira</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://akira.wang/Re0：从零开始的JavaScript - 异步流程控制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Akira">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Akira">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Re0：从零开始的JavaScript - 异步流程控制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-08T21:08:07+08:00">
+                2018-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,793
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h1><p>在异步编程中，一直在使用Promise。期间一直想做个深入的研究，无奈一直比较忙（懒），今天总算是抽出时间（上班偷懒）来总结一下：<br><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2786325316,2806414041&amp;fm=27&amp;gp=0.jpg" alt="image"></p>
+<blockquote>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><ul>
+<li>《你不知道的JavaScript》 - 中卷 </li>
+<li>《体验异步的终极解决方案-ES7的Async/Await》(<a href="https://cnodejs.org/topic/5640b80d3a6aa72c5e0030b6" target="_blank" rel="noopener">https://cnodejs.org/topic/5640b80d3a6aa72c5e0030b6</a>)</li>
+<li>《ES6入门》 (<a href="http://es6.ruanyifeng.com/#docs/async" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/async</a>)</li>
+<li>《如何正确学习Node.js》 - 知乎Live 狼叔(i5ting)</li>
+</ul>
+</blockquote>
+<p>从JavaScript程序执行说起，JavaScript程序总是至少分为两块：一块是同步，一块是异步，尽管程序是一块一块执行的，但是所有这些块共享对程序作用域和状态的访问，所以对状态的修改都是在之前累积的修改之上的进行的。</p>
+<p>一旦有事件需要运行，事件循环（Event Loop）就会运行，直到队列清空，异步总是在同步之后执行，这里不细谈。</p>
+<p>JavaScript是单线程的，多个事件，执行速度快的话，看起来就像是并发运行。实际上是多个事件在线程上交替执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">var a = 1, b = 2;</div><div class="line">/* 块1</div><div class="line">function foo() &#123;</div><div class="line">    a++;</div><div class="line">    b = b * a;</div><div class="line">    a = b + 3;</div><div class="line">&#125;</div><div class="line">*/</div><div class="line"></div><div class="line">/* 块2</div><div class="line">function bar() &#123;</div><div class="line">    b--;</div><div class="line">    a = 8 + b;</div><div class="line">    b = a * 2;</div><div class="line">&#125;</div><div class="line">*/</div><div class="line"></div><div class="line">// ajax()为某个库提供的某个Ajax函数</div><div class="line">ajax(&quot;http://...&quot;, foo);</div><div class="line">ajax(&quot;http://...&quot;, bar);</div></pre></td></tr></table></figure>
+<p>块1和块2哪个先运行都有可能，JavaScript特性中，这种函数顺序不确定性就是通常所说的竞态条件（race condition）。</p>
+<h1 id="一、回调（callback）"><a href="#一、回调（callback）" class="headerlink" title="一、回调（callback）"></a>一、回调（callback）</h1><p> 简单说回调方法就是将一个方法func2作为参数传入另一个方法func1。</p>
+<p> 当func1执行到某一步或者满足某种条件的时候才执行传入的参数func2，</p>
+<p> 如果我要让上面代码请求相应后先执行 块2 再执行 块1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/* 块1</div><div class="line">function foo(func) &#123;</div><div class="line">    a++;</div><div class="line">    b = b * a;</div><div class="line">    a = b + 3;</div><div class="line">    func();</div><div class="line">&#125;</div><div class="line">*/</div><div class="line"></div><div class="line">/* 块2</div><div class="line">function bar() &#123;</div><div class="line">    b--;</div><div class="line">    a = 8 + b;</div><div class="line">    b = a * 2;</div><div class="line">&#125;</div><div class="line">*/</div><div class="line"></div><div class="line">// ajax(&quot;http://...&quot;, bar(ajax1));</div><div class="line">function ajax1() &#123;</div><div class="line">    ajax(&quot;http://...&quot;, foo);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当我们业务逻辑越来越多的时候，闻名JS界的回调地狱（callback hell）来了 ↓↓↓</p>
+<p>回调地狱图片:<img src="https://upload-images.jianshu.io/upload_images/147516-3bb56611ec38dcce.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="image"></p>
+<p>这只是一部分问题，还有其他的一些，比如控制反转，BUG追踪…</p>
+<p>随着JavaScript越来越多成熟，对于异步编程领域的发展，回调已经不够用了。我们需要比回调更高级，功能更强大的异步模式。</p>
+<h1 id="二、Promise"><a href="#二、Promise" class="headerlink" title="二、Promise"></a>二、Promise</h1><p><img src="http://pic.qqtn.com/up/2016-5/2016050509212091713.jpg" alt="image"></p>
+<p>Promise是异步编程的一种解决方案，它有三种状态，分别是pending-进行中、resolved-已完成、rejected-已失败</p>
+<h2 id="基本用法："><a href="#基本用法：" class="headerlink" title="基本用法："></a>基本用法：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">new Promise((resolve, reject) =&gt; &#123;</div><div class="line">    // do something</div><div class="line">    setTimeout(function () &#123;</div><div class="line">        resolve(1);</div><div class="line">    &#125;, 500);</div><div class="line">&#125;).then((data) =&gt; &#123;</div><div class="line">    console.log(&apos;data:&apos; + data); // data:1</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：实例化的Promise对象会立即执行</p>
+</blockquote>
+<p>这时候你应该有所领悟了，原来then里面的函数就跟我们平时的回调函数一个意思，能够在runAsync这个异步任务执行完成之后被执行。</p>
+<p>这就是Promise的作用了，简单来讲，就是能把原来的回调写法分离出来，在异步操作执行完后，用链式调用的方式执行回调函数。</p>
+<p>回调太多的时候，就可以将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。</p>
+<p>此外，Promise 对象提供统一的接口，使得控制异步操作更加容易。<br>链式写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">function async_1(data) &#123;</div><div class="line">    return new Promise((resolve, reject) =&gt; &#123; </div><div class="line">        // do something...</div><div class="line">        console.time(&apos;异步_1执行 完成&apos;);</div><div class="line">        setTimeout(function () &#123;</div><div class="line">            resolve(data);</div><div class="line">        &#125;, 500);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">async_1(1)</div><div class="line">.then((data) =&gt; &#123;</div><div class="line">    console.timeEnd(&apos;数据：&apos;+　++data);</div><div class="line">    return async_1(data);</div><div class="line">&#125;)</div><div class="line">.then((data) &#123;</div><div class="line">    console.timeEnd(&apos;数据：&apos;+　++data);</div><div class="line">    return &apos;执行完毕&apos;;</div><div class="line">&#125;)</div><div class="line">.then((msg)=&gt; &#123;</div><div class="line"> console.timeEnd(msg); </div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>如果Promise链中的某个步骤出错了怎么办？</p>
+<h2 id="catch"><a href="#catch" class="headerlink" title=".catch()"></a>.catch()</h2><p>错误和异常是基于每个Promise的，这意味着可能在链的任意位置捕捉到这样的错误，而这个捕捉动作在某种程度上就相当于在这个位置将整条链 “重置” 回了正常运作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">function async_2() &#123;</div><div class="line">    return new Promise((resolve, reject) =&gt; &#123;</div><div class="line">        // do something...</div><div class="line">        var data = Math.random() * 10 | 0;</div><div class="line">        setTimeout(function () &#123;</div><div class="line">            if (data &lt;= 5) &#123;</div><div class="line">                resolve(data);</div><div class="line">            &#125; else &#123;</div><div class="line">                reject(data);</div><div class="line">            &#125;</div><div class="line">        &#125;, 500);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">async_2()</div><div class="line">.then(function (data) &#123;</div><div class="line">    console.log(&apos;数字刚好：&apos;+data); //数字刚好：5</div><div class="line">    return async_2();</div><div class="line">&#125;)</div><div class="line">.then(function (data) &#123;</div><div class="line">    console.log(&apos;数字刚好：&apos;+data); // 数字刚好：1</div><div class="line">&#125;)</div><div class="line">.then(function (data) &#123;</div><div class="line">    console.log(&apos;执行完毕 - &apos;+data); //执行完毕 - undefined</div><div class="line">&#125;)</div><div class="line">.catch(function (err) &#123;</div><div class="line">    console.log(&apos;数字太大了：&apos; + err); // 数字太大了： 6</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>.catch()的作用是捕获Promise的错误，与then()的rejected回调作用几乎一致。但是由于Promise的抛错具有冒泡性质，能够不断传递，这样就能够在下一个catch()中统一处理这些错误。</p>
+<p>同时catch()也能够捕获then()中抛出的错误，所以建议不要使用then()的rejected回调，而是统一使用catch()来处理错误。</p>
+<p>上面代码可能会出错，进到catch方法里面去，而且把错误原因传到了err参数中。即便是有错误的代码也不会报错了，这与我们的try/catch语句有相同的功能。</p>
+<h2 id="Promise-模式"><a href="#Promise-模式" class="headerlink" title="Promise 模式"></a>Promise 模式</h2><h3 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all([..])"></a>Promise.all([..])</h3><p>在Promise链中，任意时刻都只能有一个异步任务正在执行 —— 步骤2只能在步骤1之后，步骤3只能在步骤2之后。</p>
+<p>如果想要同时执行两个或更多步骤呢？</p>
+<p>门（gate）是这样一种机制要等待两个或更多并行任务都完成才继续。顺序不重要，但必须都要完成，门才能打开并让流程控制继续</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">function async_3() &#123;</div><div class="line">    return new Promise((resolve, reject) =&gt; &#123;</div><div class="line">        // do something...</div><div class="line">        var data = Math.random() * 10 | 0;</div><div class="line">        console.time(data);</div><div class="line">        setTimeout(function () &#123;</div><div class="line">            resolve(data);</div><div class="line">        &#125;, 500);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line">function async_4() &#123;</div><div class="line">    return new Promise((resolve, reject) =&gt; &#123;</div><div class="line">        // do something...</div><div class="line">        var data = Math.random() * 10 | 0;</div><div class="line">        // console.time(data);</div><div class="line">        setTimeout(function () &#123;</div><div class="line">            reject(data);</div><div class="line">        &#125;, 1500);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">Promise.all([async_3(),async_4()])</div><div class="line">.then((datas) =&gt; &#123;</div><div class="line">    console.timeEnd(datas[1]);</div><div class="line">&#125;).catch((err) =&gt; &#123;</div><div class="line">    console.log(err);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>从Promise.all 返回的主promise在且仅在所有的成员promise都完成后才会完成。如果这些promise中有任何一个被拒绝的话，主Promise.all就会立即被拒绝，并丢弃来自其他所有promise的全部结果。</p>
+<h3 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race([])"></a>Promise.race([])</h3><p>和all类似，race是第一个执行完后此时then里面就执行了。可是，其他函数仍旧会执行完毕。</p>
+<blockquote>
+<p>笔者推荐windows用户网速是小水管的情况下使⽤ <a href="https://devdocs.io/" target="_blank" rel="noopener">https://devdocs.io/</a> 查看离线⽂档，经常查看离线⽂档，对Api理解会深⼊很多，⽐IDE<br>辅助要好，可以有效避免离开IDE就不会写代码的窘境。</p>
+</blockquote>
+<h2 id="Promise-缺点"><a href="#Promise-缺点" class="headerlink" title="Promise 缺点"></a>Promise 缺点</h2><p>首先，无法取消 Promise，一旦新建它就会立即执行，无法中途取消。</p>
+<p>其次，如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部。</p>
+<p>第三，当处于 Pending 状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。</p>
+<h2 id="Promise-性能"><a href="#Promise-性能" class="headerlink" title="Promise 性能"></a>Promise 性能</h2><p>不得不说，Promise给我们提供了保护的同时，相比基本的基于回调的异步任务链要慢一点。但是耿耿于微小的性能损失而无视它提供的所有优点，合适吗？</p>
+<h2 id="Promise总结"><a href="#Promise总结" class="headerlink" title="Promise总结"></a>Promise总结</h2><p>Promise 并没有摈弃回调，只是把回调的安排转交给了一个位于我们和其他工具之间的可信任性的中介机制。</p>
+<h1 id="再来介绍-ES7-Async-Await"><a href="#再来介绍-ES7-Async-Await" class="headerlink" title="再来介绍 ES7 - Async/Await"></a>再来介绍 ES7 - Async/Await</h1><p><img src="http://pic.qqtn.com/up/2016-5/2016050509212011462.jpg" alt="image"></p>
+<p>该新特性就如名字一样 “异步”/“等待” ，处理异步最简单粗暴的方法</p>
+<p>看了下面的栗子就能知道个大概：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">var sleep = function (time) &#123;</div><div class="line">    return new Promise(function (resolve, reject) &#123;</div><div class="line">        setTimeout(function () &#123;</div><div class="line">            resolve(&apos;up&apos;);</div><div class="line">        &#125;, time);</div><div class="line">    &#125;)</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var start = async function () &#123;</div><div class="line">    // 在这里使用起来就像同步代码那样直观</div><div class="line">    console.log(&apos;start&apos;);</div><div class="line">    // await等待的虽然是promise对象，但不必写.then(..)，直接可以得到返回值</div><div class="line">    let status = await sleep(3000);</div><div class="line">    console.log(&apos;end. I &apos; + status); // &apos;end. I up&apos;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">start();</div></pre></td></tr></table></figure>
+<p>其实async函数完全可以看作多个异步操作，包装成的一个 Promise 对象，而await命令就是内部then命令的语法糖。</p>
+<p>那我们为什么要去使用它呢？</p>
+<ul>
+<li>更好的语义</li>
+<li>不需要执行器，它本身具备执行能力，不像Generator需要co模块</li>
+<li>Await接Promise， Promise⾃身就⾜够应对所有流程了，包括async函数没有纯并⾏处理机制，也可以采⽤Promise⾥的all和race来补⻬</li>
+<li>更广的适用性(async函数的await命令后面，可以是 Promise 对象和原始类型的值（数值、字符串和布尔值，但这时等同于同步操作）。)</li>
+</ul>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>如果await后面的异步操作出错，那么等同于async函数返回的 Promise 对象被reject</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">async function f() &#123;</div><div class="line">    await new Promise(function (resolve, reject) &#123;</div><div class="line">        throw new Error(&apos;出错了&apos;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">f()</div><div class="line">.then(v =&gt; console.log(v))</div><div class="line">.catch(e =&gt; console.log(e))</div><div class="line"></div><div class="line">Error：出错了</div></pre></td></tr></table></figure>
+<p>上面代码中，async函数f执行后，await后面的 Promise 对象会抛出一个错误对象，导致catch方法的回调函数被调用，它的参数就是抛出的错误对象。</p>
+<p>一般防止出错的方法，也是将其放在try…catch代码块之中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">async function f() &#123;</div><div class="line">  try &#123;</div><div class="line">    await new Promise(function (resolve, reject) &#123;</div><div class="line">      throw new Error(&apos;出错了&apos;);</div><div class="line">    &#125;);</div><div class="line">  &#125; catch(e) &#123;</div><div class="line">  &#125;</div><div class="line">  return await(&apos;hello world&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果有多个await命令，可以统一放在try…catch结构中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">async function main() &#123;</div><div class="line">    try &#123;</div><div class="line">      const val1 = await firstStep();</div><div class="line">      const val2 = await secondStep(val1);</div><div class="line">      const val3 = await thirdStep(val1, val2);</div><div class="line">  </div><div class="line">      console.log(&apos;Final: &apos;, val3);</div><div class="line">    &#125;</div><div class="line">    catch (err) &#123;</div><div class="line">      console.error(err);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="并发处理"><a href="#并发处理" class="headerlink" title="并发处理"></a>并发处理</h2><p>多个await命令后面的异步操作，如果不存在继发关系，最好让它们同时触发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let foo = await getFoo();</div><div class="line">let bar = await getBar();</div></pre></td></tr></table></figure>
+<p>上面代码中，getFoo和getBar是两个独立的异步操作（即互不依赖），被写成继发关系。这样比较耗时，因为只有getFoo完成以后，才会执行getBar，完全可以让它们同时触发。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">写法一</div><div class="line">let [foo, bar] = await Promise.all([getFoo(), getBar()]);</div><div class="line"></div><div class="line">写法二</div><div class="line">let fooPromise = getFoo();</div><div class="line">let barPromise = getBar();</div><div class="line">let foo = await fooPromise;</div><div class="line">let bar = await barPromise;</div></pre></td></tr></table></figure>
+<p>实际开发中，经常遇到一组异步操作，需要按照顺序完成。比如，依次远程读取一组 URL，然后按照读取的顺序输出结果 例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">async function logInOrder(urls) &#123;</div><div class="line">    for (const url of urls) &#123;</div><div class="line">      const response = await fetch(url);</div><div class="line">      console.log(await response.text());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码问题是所有远程操作都是继发。只有前一个 URL 返回结果，才会去读取下一个 URL，这样做效率很差，非常浪费时间。我们需要的是并发发出远程请求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">async function logInOrder(urls) &#123;</div><div class="line">    // 并发读取远程URL</div><div class="line">    const textPromises = urls.map(async url =&gt; &#123;</div><div class="line">      const response = await fetch(url);</div><div class="line">      return response.text();</div><div class="line">    &#125;);</div><div class="line">  </div><div class="line">    // 按次序输出</div><div class="line">    for (const textPromise of textPromises) &#123;</div><div class="line">      console.log(await textPromise);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码中，虽然map方法的参数是async函数，但它是并发执行的，因为只有async函数内部是继发执行，外部不受影响。后面的for..of循环内部使用了await，因此实现了按顺序输出。</p>
+<h2 id="注意的点"><a href="#注意的点" class="headerlink" title="注意的点"></a>注意的点</h2><p>await命令只能用在async函数之中，如果用在普通函数，就会报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">async function dbFuc(db) &#123;</div><div class="line">    let docs = [&#123;&#125;, &#123;&#125;, &#123;&#125;];</div><div class="line">  </div><div class="line">    // 报错</div><div class="line">    docs.forEach(function (doc) &#123;</div><div class="line">      await db.post(doc);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码会报错，因为await用在普通函数之中了。但是，如果将forEach方法的参数改成async函数，也有问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">async function dbFuc(db) &#123;</div><div class="line">    let docs = [&#123;&#125;, &#123;&#125;, &#123;&#125;];</div><div class="line">  </div><div class="line">    for (let doc of docs) &#123;</div><div class="line">      await db.post(doc);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>　首先Promise是基础，对于初学者来说，先够⽤，再去深究细节，其次async/await + Promise 可解决大部分场景。</p>
+<h2 id="吐槽一下"><a href="#吐槽一下" class="headerlink" title="吐槽一下"></a>吐槽一下</h2><p>JavaScript技术发展真的是指数爆炸般的增长，真心学不过来。</p>
+<p><img src="http://uploads.5068.com/allimg/170417/1-1F41G60100.gif" alt="image"></p>
+<p>… 啊啊啊啊，说到底还是得掌握好原理
+　</p>
+
+      
+    </div>
+	
+	<div>
+	  
+	    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束感谢您的阅读-------------</div>
+    
+</div>
+	  
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Re0：从零开始的JavaScript - 观察者模式的理解/" rel="next" title="Re0：从零开始的JavaScript - 观察者模式的理解">
+                <i class="fa fa-chevron-left"></i> Re0：从零开始的JavaScript - 观察者模式的理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/浅谈 Promise 实现/" rel="prev" title="Re0：从零开始的JavaScript - 浅谈 Promise 实现">
+                Re0：从零开始的JavaScript - 浅谈 Promise 实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+         <!--MOB SHARE BEGIN-->
+    <div class="-mob-share-ui-button -mob-share-open">分享</div>
+                                <div class="-mob-share-ui" style="display: none">
+                                    <ul class="-mob-share-list">
+                                        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+                                        <li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>
+                                        <li class="-mob-share-qzone"><p>QQ空间</p></li>
+                                        <li class="-mob-share-qq"><p>QQ好友</p></li>
+                                        <li class="-mob-share-weixin"><p>微信</p></li>
+                                        <li class="-mob-share-douban"><p>豆瓣</p></li>
+                                        <li class="-mob-share-renren"><p>人人网</p></li>
+                                        <li class="-mob-share-kaixin"><p>开心网</p></li>
+                                        <li class="-mob-share-facebook"><p>Facebook</p></li>
+                                        <li class="-mob-share-twitter"><p>Twitter</p></li>
+                                        <li class="-mob-share-pocket"><p>Pocket</p></li>
+                                        <li class="-mob-share-google"><p>Google+</p></li>
+                                        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+                                        <li class="-mob-share-mingdao"><p>明道</p></li>
+                                        <li class="-mob-share-pengyou"><p>朋友网</p></li>
+                                        <li class="-mob-share-tumblr"><p>Tumblr</p></li>
+                                        <li class="-mob-share-instapaper"><p>Instapaper</p></li>
+                                        <li class="-mob-share-linkedin"><p>LinkedIn</p></li>
+                                    </ul>
+                                    <div class="-mob-share-close">取消</div>
+                                </div>
+                                <div class="-mob-share-ui-bg"></div>
+                                <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=21b10bbc8adca"></script>
+                                <!--MOB SHARE END-->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Akira" />
+          <p class="site-author-name" itemprop="name">Akira</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料："><span class="nav-number">1.1.</span> <span class="nav-text">参考资料：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、回调（callback）"><span class="nav-number">2.</span> <span class="nav-text">一、回调（callback）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Promise"><span class="nav-number">3.</span> <span class="nav-text">二、Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本用法："><span class="nav-number">3.1.</span> <span class="nav-text">基本用法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#catch"><span class="nav-number">3.2.</span> <span class="nav-text">.catch()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-模式"><span class="nav-number">3.3.</span> <span class="nav-text">Promise 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise-all"><span class="nav-number">3.3.1.</span> <span class="nav-text">Promise.all([..])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise-race"><span class="nav-number">3.3.2.</span> <span class="nav-text">Promise.race([])</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-缺点"><span class="nav-number">3.4.</span> <span class="nav-text">Promise 缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-性能"><span class="nav-number">3.5.</span> <span class="nav-text">Promise 性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise总结"><span class="nav-number">3.6.</span> <span class="nav-text">Promise总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#再来介绍-ES7-Async-Await"><span class="nav-number">4.</span> <span class="nav-text">再来介绍 ES7 - Async/Await</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#错误处理"><span class="nav-number">4.1.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发处理"><span class="nav-number">4.2.</span> <span class="nav-text">并发处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意的点"><span class="nav-number">4.3.</span> <span class="nav-text">注意的点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#吐槽一下"><span class="nav-number">5.1.</span> <span class="nav-text">吐槽一下</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Akira</span>
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  1225658998@qq.com
+</div>
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

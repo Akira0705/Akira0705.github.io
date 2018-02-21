@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Akira" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="动态规划是一种将复杂问题分解成更小的子问题来解决的优化技术。 用动态规划解决问题时，要遵循三个重要步骤：  （1）、定义子问题 （2）、实现要反复执行来解决子问题的部分 （3）、识别并求解出边界条件\   1、最少硬币找零问题 最少硬币找零问题是给出要找零的钱数，以及可用的硬币面额d1…dn及其数量，找到所需最少的硬币个数。  例如：有以下面额（硬币）：d1=1,d2=5,d3=10,d4=25">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript — 动态规划&amp;&amp;贪心算法">
+<meta property="og:url" content="http://akira.wang/JavaScript — 动态规划&&贪心算法/index.html">
+<meta property="og:site_name" content="Akira">
+<meta property="og:description" content="动态规划是一种将复杂问题分解成更小的子问题来解决的优化技术。 用动态规划解决问题时，要遵循三个重要步骤：  （1）、定义子问题 （2）、实现要反复执行来解决子问题的部分 （3）、识别并求解出边界条件\   1、最少硬币找零问题 最少硬币找零问题是给出要找零的钱数，以及可用的硬币面额d1…dn及其数量，找到所需最少的硬币个数。  例如：有以下面额（硬币）：d1=1,d2=5,d3=10,d4=25">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://akira.wang/images/DP/end.jpg">
+<meta property="og:updated_time" content="2017-10-17T10:19:05.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript — 动态规划&amp;&amp;贪心算法">
+<meta name="twitter:description" content="动态规划是一种将复杂问题分解成更小的子问题来解决的优化技术。 用动态规划解决问题时，要遵循三个重要步骤：  （1）、定义子问题 （2）、实现要反复执行来解决子问题的部分 （3）、识别并求解出边界条件\   1、最少硬币找零问题 最少硬币找零问题是给出要找零的钱数，以及可用的硬币面额d1…dn及其数量，找到所需最少的硬币个数。  例如：有以下面额（硬币）：d1=1,d2=5,d3=10,d4=25">
+<meta name="twitter:image" content="http://akira.wang/images/DP/end.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://akira.wang/JavaScript — 动态规划&&贪心算法/"/>
+
+
+
+
+
+  <title>JavaScript — 动态规划&&贪心算法 | Akira</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -30px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/miku/miku.model.json",0.5)</script>
+  
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+		<a href="https://github.com/Akira0705"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Akira</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://akira.wang/JavaScript — 动态规划&&贪心算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Akira">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Akira">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript — 动态规划&&贪心算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-17T18:14:30+08:00">
+                2017-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,136
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><p>是一种将复杂问题分解成更小的子问题来解决的优化技术。</p>
+<p>用动态规划解决问题时，要遵循三个重要步骤：</p>
+<blockquote>
+<p>（1）、定义子问题</p>
+<p>（2）、实现要反复执行来解决子问题的部分</p>
+<p>（3）、识别并求解出边界条件\</p>
+</blockquote>
+<hr>
+<h2 id="1、最少硬币找零问题"><a href="#1、最少硬币找零问题" class="headerlink" title="1、最少硬币找零问题"></a>1、最少硬币找零问题</h2><p> 最少硬币找零问题是给出要找零的钱数，以及可用的硬币面额d1…dn及其数量，找到所需最少的硬币个数。</p>
+<p> 例如：有以下面额（硬币）：d1=1,d2=5,d3=10,d4=25</p>
+<p> 如果要找36美分的零钱，我们可以用1个25、1个10、1个1美分。</p>
+<p> 下面将这个解答转化成算法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">function MinCoinChange(coins_) &#123;</div><div class="line">    let coins = coins_;</div><div class="line">    let cache = &#123;&#125;;</div><div class="line"></div><div class="line">    this.makeChange = function(amount) &#123;</div><div class="line">        let me = this;</div><div class="line">        if(!amount) &#123;</div><div class="line">            return [];</div><div class="line">        &#125;</div><div class="line">        if(cache[amount]) &#123;</div><div class="line">            return cache[amount];</div><div class="line">        &#125;</div><div class="line">        let min = [], newMin, newAmount;</div><div class="line">        for(let i = 0; i&lt;coins.length; i++) &#123;</div><div class="line">            let coin = coins[i];</div><div class="line">            newAmount = amount - coin;</div><div class="line">            if(newAmount &gt;= 0) &#123;</div><div class="line">                newMin = me.makeChange(newAmount);</div><div class="line">            &#125;</div><div class="line">            if(newAmount &gt;= 0 &amp;&amp; </div><div class="line">                (newMin.length &lt; min.length - 1 || !min.length ) &amp;&amp;</div><div class="line">                (newMin.length || !newAmount) </div><div class="line">            ) &#123;</div><div class="line">                min = [coin].concat(newMin);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return cache[amount] = min;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">var minCoinChange = new MinCoinChange([1,5,10,25]);</div><div class="line">console.log(minCoinChange.makeChange(36));</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="2、背包问题"><a href="#2、背包问题" class="headerlink" title="2、背包问题"></a>2、背包问题</h2><p> 背包问题是一个组合优化问题。描述如下：给定一个固定大小、能够携重W的背包，以及一组有价值和重量的物品。</p>
+<p> 在物品不重复情况下，找出一个最佳解决方案，使得装入背包的物品总重量不超过W，且总价值最大。</p>
+<p> 比如：<br> 糖果：重量2 价值3，饼干：重量3 价值4，牛奶：重量4 价值5。</p>
+<p> 考虑背包只能携带重量只有5。对于这个例子，最佳方案是往背包里装糖果和饼干，这样，总重量为5，总价值为7。<br> 转化为算法如下（返回的是价值量）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">function knapSack(capacity, weights, values, n) &#123;</div><div class="line">    let i, w, a, b, kS = [];</div><div class="line">    for(i = 0; i &lt;= n; i++) &#123;</div><div class="line">        kS[i] = [];</div><div class="line">    &#125;</div><div class="line">    for(i = 0; i &lt;= n; i++) &#123;</div><div class="line">        for(w = 0; w &lt;= capacity; w++) &#123;</div><div class="line">            if(i == 0 || w == 0) &#123;</div><div class="line">                kS[i][w] = 0;</div><div class="line">            &#125; else if (weights[i-1] &lt;= w) &#123;</div><div class="line">                a = values[i-1] + kS[i-1][w-weights[i-1]];</div><div class="line">                b = kS[i-1][w];</div><div class="line">                kS[i][w] = (a &gt; b) ? a : b;</div><div class="line">            &#125; else &#123;</div><div class="line">                kS[i][w] = kS[i-1][w];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    findValues(n, capacity, kS, weights, values);</div><div class="line">    return kS[n][capacity];</div><div class="line">&#125;</div><div class="line">let findValues = (n, capacity, kS, weights, values) =&gt; &#123;</div><div class="line">    let i = n, k = capacity;</div><div class="line">    console.log(&apos;解决方案包含以下物品&apos;);</div><div class="line">    while(i &gt; 0 &amp;&amp; k &gt; 0) &#123;</div><div class="line">        if(kS[i][k] !== kS[i-1][k]) &#123;</div><div class="line">            console.log(&apos;物品&apos; + i + &apos;，重量:&apos; + weights[i-1] + &apos;,价值:&apos; + values[i-1]);</div><div class="line">            i--;</div><div class="line">            k = k - kS[i][k];</div><div class="line">        &#125; else &#123;</div><div class="line">            i--;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">let values = [3,4,5],</div><div class="line">    weights = [2,3,4],</div><div class="line">    capacity = 6,</div><div class="line">    n = values.length;</div><div class="line">console.log(knapSack(capacity, weights, values, n));</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="二、贪心算法"><a href="#二、贪心算法" class="headerlink" title="二、贪心算法"></a>二、贪心算法</h1><p> 贪心算法遵循一种近似解决问题的技术，期盼通过每个阶段的局部最优选择（当前最好的解）。从而达到全局最优。它不像DP（动态规划）那样计算更大的格局。</p>
+<p> 我们来看看如何用贪心算法解决“最少硬币找零问题”和“背包问题”。</p>
+<p> 1、最少硬币找零问题</p>
+<p> 用贪心算法解决。大部分情况下的结果是最优的，不过对有些面额而言，结果不会是最优的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function MinCoinChange(coins_) &#123;</div><div class="line">    let coins = coins_;</div><div class="line">    this.makeChange = function(amount) &#123;</div><div class="line">        let change = [],</div><div class="line">            total = 0;</div><div class="line">        for(let i = coins.length; i &gt;= 0; i--) &#123;</div><div class="line">            let coin =coins[i];</div><div class="line">            while (total + coin &lt;= amount) &#123;</div><div class="line">                change.push(coin);</div><div class="line">                total += coin;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return change;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>不得不说贪心版本比DP简单多了。</p>
+<p>这个解法很简单，从最大面额的硬币开始，拿尽可能多的这种硬币找零。当无法再拿更多这种价值的硬币时，开始拿第二大价值的硬币，依次继续.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let minCoinChange = new MinCoinChange([1,5,18,25]);</div><div class="line">console.log(minCoinChange.makeChange(36)); // [25,10,1]</div></pre></td></tr></table></figure>
+<p>然而，因为是从最大面额开始，如果上面面额改为[1,5,18,25]。会得到结果[25,5,5,1]，如果用DP的解法，会得到最优结果[18,18]</p>
+<hr>
+<h2 id="2、分数背包问题"><a href="#2、分数背包问题" class="headerlink" title="2、分数背包问题"></a>2、分数背包问题</h2><p>分数背包问题和DP的稍有不同。分数背包问题中，我们可以装入分散的物品。</p>
+<p> 比如：我们考虑的容量为6的情况下，DP返回的是8，分数背包返回的是8.25。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">function knapSack(capacity, weights, values, n_) &#123;</div><div class="line">    let n  = n_,</div><div class="line">    load = 0, i = 0, val = 0;</div><div class="line"></div><div class="line">    for(i = 0; i &lt; n &amp;&amp; load &lt;= capacity; i++) &#123;</div><div class="line">        if(weights[i] &lt;= (capacity - load)) &#123;</div><div class="line">            val += values[i];</div><div class="line">            load += weights[i];</div><div class="line">            console.log(i, val);</div><div class="line">        &#125; else &#123;</div><div class="line">            let r = (capacity - load) / weights[i];</div><div class="line">            val += r * values[i];</div><div class="line">            load += weights[i];</div><div class="line">            console.log(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return val;</div><div class="line">&#125;</div><div class="line">let values = [3,4,5],</div><div class="line">    weights = [2,3,4],</div><div class="line">    capacity = 6,</div><div class="line">    n = values.length;</div><div class="line">console.log(knapSack(capacity, weights, values, n));</div></pre></td></tr></table></figure>
+<p> 主要就是如果物品不能完整装入背包，计算能够装入部分的比例。</p>
+<hr>
+<h1 id="结语：一个程序猿还是需要掌握一点算法知识，这是不会错的。"><a href="#结语：一个程序猿还是需要掌握一点算法知识，这是不会错的。" class="headerlink" title="结语：一个程序猿还是需要掌握一点算法知识，这是不会错的。"></a>结语：一个程序猿还是需要掌握一点算法知识，这是不会错的。</h1><p><img src="/images/DP/end.jpg" alt="image"></p>
+
+      
+    </div>
+	
+	<div>
+	  
+	    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束感谢您的阅读-------------</div>
+    
+</div>
+	  
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/addEventListener 中 事件用bind指向this 后，无法移除事件问题/" rel="next" title="addEventListener中事件用bind指向this后,无法移除事件问题.">
+                <i class="fa fa-chevron-left"></i> addEventListener中事件用bind指向this后,无法移除事件问题.
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/区区一个死宅/" rel="prev" title="区区一个死宅">
+                区区一个死宅 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+         <!--MOB SHARE BEGIN-->
+    <div class="-mob-share-ui-button -mob-share-open">分享</div>
+                                <div class="-mob-share-ui" style="display: none">
+                                    <ul class="-mob-share-list">
+                                        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+                                        <li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>
+                                        <li class="-mob-share-qzone"><p>QQ空间</p></li>
+                                        <li class="-mob-share-qq"><p>QQ好友</p></li>
+                                        <li class="-mob-share-weixin"><p>微信</p></li>
+                                        <li class="-mob-share-douban"><p>豆瓣</p></li>
+                                        <li class="-mob-share-renren"><p>人人网</p></li>
+                                        <li class="-mob-share-kaixin"><p>开心网</p></li>
+                                        <li class="-mob-share-facebook"><p>Facebook</p></li>
+                                        <li class="-mob-share-twitter"><p>Twitter</p></li>
+                                        <li class="-mob-share-pocket"><p>Pocket</p></li>
+                                        <li class="-mob-share-google"><p>Google+</p></li>
+                                        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+                                        <li class="-mob-share-mingdao"><p>明道</p></li>
+                                        <li class="-mob-share-pengyou"><p>朋友网</p></li>
+                                        <li class="-mob-share-tumblr"><p>Tumblr</p></li>
+                                        <li class="-mob-share-instapaper"><p>Instapaper</p></li>
+                                        <li class="-mob-share-linkedin"><p>LinkedIn</p></li>
+                                    </ul>
+                                    <div class="-mob-share-close">取消</div>
+                                </div>
+                                <div class="-mob-share-ui-bg"></div>
+                                <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=21b10bbc8adca"></script>
+                                <!--MOB SHARE END-->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Akira" />
+          <p class="site-author-name" itemprop="name">Akira</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#动态规划"><span class="nav-number">1.</span> <span class="nav-text">动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、最少硬币找零问题"><span class="nav-number">1.1.</span> <span class="nav-text">1、最少硬币找零问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、背包问题"><span class="nav-number">1.2.</span> <span class="nav-text">2、背包问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、贪心算法"><span class="nav-number">2.</span> <span class="nav-text">二、贪心算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2、分数背包问题"><span class="nav-number">2.1.</span> <span class="nav-text">2、分数背包问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语：一个程序猿还是需要掌握一点算法知识，这是不会错的。"><span class="nav-number">3.</span> <span class="nav-text">结语：一个程序猿还是需要掌握一点算法知识，这是不会错的。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Akira</span>
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  1225658998@qq.com
+</div>
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

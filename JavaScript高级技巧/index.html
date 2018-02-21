@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Akira" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="摘要：博客开了几个月了也没写什么，想着还是随手写一点吧，也有助于自己的加深理解。最近又在看《JavaScript高级程序设计》，刚好看到第22章的高级技巧，就随手码下来吧。 本文内容由《JavaScript高级程序设计》书上的P596 - P625 和 本人对这些技巧的理解提供。 适合人群：如果你刚好在看这本书，或者想特高JS代码的性能优化，减少代码耦合，都可以看本文章。当然，你还需要有一定的J">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《JavaScript高级程序设计》—— 高级技巧">
+<meta property="og:url" content="http://akira.wang/JavaScript高级技巧/index.html">
+<meta property="og:site_name" content="Akira">
+<meta property="og:description" content="摘要：博客开了几个月了也没写什么，想着还是随手写一点吧，也有助于自己的加深理解。最近又在看《JavaScript高级程序设计》，刚好看到第22章的高级技巧，就随手码下来吧。 本文内容由《JavaScript高级程序设计》书上的P596 - P625 和 本人对这些技巧的理解提供。 适合人群：如果你刚好在看这本书，或者想特高JS代码的性能优化，减少代码耦合，都可以看本文章。当然，你还需要有一定的J">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-30T05:57:13.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《JavaScript高级程序设计》—— 高级技巧">
+<meta name="twitter:description" content="摘要：博客开了几个月了也没写什么，想着还是随手写一点吧，也有助于自己的加深理解。最近又在看《JavaScript高级程序设计》，刚好看到第22章的高级技巧，就随手码下来吧。 本文内容由《JavaScript高级程序设计》书上的P596 - P625 和 本人对这些技巧的理解提供。 适合人群：如果你刚好在看这本书，或者想特高JS代码的性能优化，减少代码耦合，都可以看本文章。当然，你还需要有一定的J">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://akira.wang/JavaScript高级技巧/"/>
+
+
+
+
+
+  <title>《JavaScript高级程序设计》—— 高级技巧 | Akira</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -30px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/miku/miku.model.json",0.5)</script>
+  
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+		<a href="https://github.com/Akira0705"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Akira</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://akira.wang/JavaScript高级技巧/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Akira">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Akira">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《JavaScript高级程序设计》—— 高级技巧</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-30T13:30:38+08:00">
+                2017-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  5,492
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  23
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<h1 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h1><p>博客开了几个月了也没写什么，想着还是随手写一点吧，也有助于自己的加深理解。最近又在看《JavaScript高级程序设计》，刚好看到第22章的高级技巧，就随手码下来吧。</p>
+<p>本文内容由《JavaScript高级程序设计》书上的P596 - P625 和 本人对这些技巧的理解提供。</p>
+<p>适合人群：如果你刚好在看这本书，或者想特高JS代码的性能优化，减少代码耦合，都可以看本文章。当然，你还需要有一定的JS语法基础。那么，开始吧：</p>
+</blockquote>
+<hr>
+<h1 id="一、高级函数"><a href="#一、高级函数" class="headerlink" title="一、高级函数"></a>一、高级函数</h1><h2 id="1、安全的类型检测"><a href="#1、安全的类型检测" class="headerlink" title="1、安全的类型检测"></a>1、安全的类型检测</h2><p>JavaScript内置的类型检测机制并非完全可靠。比如Safari(直至第4版)在对正则表达式应用typeof操作符时会返回function，instanceof操作符在存在多个全局作用域(像一个页面包含多个frame)的情况下，也是问题多多，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var isArray = arr instanceof Array;</div></pre></td></tr></table></figure>
+<p>如果arr是在另一个frame中定义的数组。那么这里就会返回false。在检测某个对象到底是原生对象还是开发人员自定义的对象的时候。也会有问题。上述问题解决方法都一样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(Object.prototype.toString.call(arr));  // &quot;[Object Array]&quot;</div></pre></td></tr></table></figure>
+<p>由于原生数组的构造函数名与全局作用域无关，因此使用toString就能保证返回一致的值，利用这点可以创建如下函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function isArray(value) &#123;</div><div class="line">	return Object.prototype.toString.call(value) == &quot;[Object Array]&quot;;</div><div class="line">&#125;</div><div class="line">// 或者</div><div class="line">function isFunction(value) &#123;</div><div class="line">	return Object.prototype.toString.call(value) == &quot;[Object Function]&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function isRegExp(value) &#123;</div><div class="line">	return Object.prototype.toString.call(value) == &quot;[Object RegExp]&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function isNativeJSON(value) &#123;</div><div class="line">	return Object.prototype.toString.call(value) == &quot;[Object JSON]&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在开发中能够区分原生与非原生对象非常重要。只有这样才能确切知道某个对象到底有哪些功能。</p>
+</blockquote>
+<h2 id="2、作用域安全的构造函数"><a href="#2、作用域安全的构造函数" class="headerlink" title="2、作用域安全的构造函数"></a>2、作用域安全的构造函数</h2><p>直接来看看作用域不安全的构造函数吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function Person(name) &#123;</div><div class="line">	this.name = name;</div><div class="line">&#125;</div><div class="line">var person = Person(&apos;Tom&apos;);</div><div class="line">console.log(window.name);  // &quot;Tom&quot;</div></pre></td></tr></table></figure>
+<p>上面问题出在当没有使用new操作符来调用该构造函数的情况上。由于该this对象是在运行时绑定的，所以直接调用Person()，this会映射到全局对象window上，导致错误对象属性的意外增加。</p>
+<p>解决的思路是 作用域安全的构造函数在进行任何更改前，首先确认this对象是正确类型的实例。如果不是那么会创建新的实例并返回。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function Person(name) &#123;</div><div class="line">	if(this instanceof Person) &#123;</div><div class="line">		this.name = name;</div><div class="line">	&#125; else &#123;</div><div class="line">		return new Person(name);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">var person1 = Person(&quot;Tom&quot;);</div><div class="line">console.log(window.name);	// &quot;&quot;</div><div class="line">console.log(person1.name);	// &quot;Tom&quot;</div></pre></td></tr></table></figure>
+<p>这段代码中添加了一个检查并确保this对象是Person实例。最后的结果是，调用Person构造函数无论是否使用new操作符，都会返回一个Person的新实例。</p>
+<p>这样处理也有坏处，就是构造函数窃取模式的继承该实例是无效的。比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function People(sex) &#123;</div><div class="line">	Person.call(this,&apos;Tom&apos;);	// 构造函数窃取模式  —— 继承Polygon的name属性  不过在这种作用域安全情况下不可用</div><div class="line">	this.sex = sex;</div><div class="line">&#125;</div><div class="line">var people1 = new People(&apos;boy&apos;);</div><div class="line">console.log(people1.name);  //	undefined</div></pre></td></tr></table></figure>
+<p>在这里由于Person构造函数作用域是安全的，this对象并非Person实例，所以会创建并返回一个新的Person对象，所以People构造函数中的this对象并没有得到增长，也就不会有name属性。</p>
+<p>解决上面的问题，使用原型链继承即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function People(sex) &#123;</div><div class="line">	this.sex = sex;</div><div class="line">&#125;</div><div class="line">People.prototype = new Person(&apos;Tom&apos;);</div><div class="line">var people1 = new People(&apos;boy&apos;);</div><div class="line">console.log(people1.name); //	&quot;Tom&quot;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>多个程序猿在同一个页面上写JavaScript代码的环境中，作用域安全构造函数就很有用了。推荐作用域安全的构造函数作为最佳实践。</p>
+</blockquote>
+<h2 id="3、惰性载入函数"><a href="#3、惰性载入函数" class="headerlink" title="3、惰性载入函数"></a>3、惰性载入函数</h2><p>因为浏览器之间行为的差异，多数JavaScript代码包含了大量的if语句，将执行引导到正确的代码中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">function createXHR() &#123;</div><div class="line">	if(typeof XMLHttpRequest != &quot;undefined&quot;) &#123;</div><div class="line">		return new XMLHttpRequest();</div><div class="line">	&#125; else if(typeof ActiveXObject != &quot;undefined&quot;) &#123;</div><div class="line">		if(typeof arguments.callee.activeXString != &quot;string&quot;) &#123;</div><div class="line">			var version = [&quot;MSXML2.XMLHttp.6.0&quot;, &quot;MSXML2.XMLHttp.3.0&quot;, &quot;MSXML2.XMLHttp&quot;],</div><div class="line">				i,</div><div class="line">				len;</div><div class="line">			for(i = 0, len = version.length; i &lt; len; i++) &#123;</div><div class="line">				try &#123;</div><div class="line">					new ActiveXObject(version[i]);</div><div class="line">					arguments.callee.activeXString = version[i];</div><div class="line">					break;</div><div class="line">				&#125; catch(ex) &#123;</div><div class="line">					//  跳过</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		return new ActiveXObject(arguments.callee.activeXString);</div><div class="line">	&#125; else &#123;</div><div class="line">		throw new Error(&quot;No XHR object available&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>每次调用createXHR()，它都要对浏览器所支持的能力进行仔细检查。每次调用该函数都是这样，即使调用时分支的结果都不变，如果浏览器内置XHR，那么它就一直支持了，那么这种测试就变得没必要。即使只有一个if语句的代码，也肯定要比没有if语句的慢。</p>
+<p>解决方案就是称为惰性载入的技巧。书上写法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">function createXHR() &#123; //	函数声明写法</div><div class="line">	if(typeof XMLHttpRequest != &quot;undefined&quot;) &#123;</div><div class="line">		createXHR = function() &#123;</div><div class="line">			return new XMLHttpRequest();</div><div class="line">		&#125;</div><div class="line">	&#125; else if(typeof ActiveXObject != &quot;undefined&quot;) &#123;</div><div class="line">		createXHR = function() &#123;</div><div class="line">			if(typeof arguments.callee.activeXString != &quot;string&quot;) &#123;</div><div class="line">				var version = [&quot;MSXML2.XMLHttp.6.0&quot;, &quot;MSXML2.XMLHttp.3.0&quot;, &quot;MSXML2.XMLHttp&quot;],</div><div class="line">					i,</div><div class="line">					len;</div><div class="line">				for(i = 0, len = version.length; i &lt; len; i++) &#123;</div><div class="line">					try &#123;</div><div class="line">						new ActiveXObject(version[i]);</div><div class="line">						arguments.callee.activeXString = version[i];</div><div class="line">						break;</div><div class="line">					&#125; catch(ex) &#123;</div><div class="line">						//  跳过</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			return new ActiveXObject(arguments.callee.activeXString);</div><div class="line">		&#125;</div><div class="line">	&#125; else &#123;</div><div class="line">		createXHR = function() &#123;</div><div class="line">			throw new Error(&quot;No XHR object available&quot;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这是是把函数表达式写在函数内部，我认为把函数表达式写在外部即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">createXHR = function() &#123; //  这是函数表达式写法</div><div class="line">	if(typeof XMLHttpRequest != &quot;undefined&quot;) &#123;</div><div class="line">		return new XMLHttpRequest();</div><div class="line">	&#125; else if(typeof ActiveXObject != &quot;undefined&quot;) &#123;</div><div class="line">		if(typeof arguments.callee.activeXString != &quot;string&quot;) &#123;</div><div class="line">			var version = [&quot;MSXML2.XMLHttp.6.0&quot;, &quot;MSXML2.XMLHttp.3.0&quot;, &quot;MSXML2.XMLHttp&quot;],</div><div class="line">				i,</div><div class="line">				len;</div><div class="line">			for(i = 0, len = version.length; i &lt; len; i++) &#123;</div><div class="line">				try &#123;</div><div class="line">					new ActiveXObject(version[i]);</div><div class="line">					arguments.callee.activeXString = version[i];</div><div class="line">					break;</div><div class="line">				&#125; catch(ex) &#123;</div><div class="line">					//  跳过</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		return new ActiveXObject(arguments.callee.activeXString);</div><div class="line">	&#125; else &#123;</div><div class="line">		throw new Error(&quot;No XHR object available&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这两种写法都可以在执行createXHR方法的时候执行第一遍后，后面执行就不会再进行if判断。如果有需要函数第一次执行也不产生if判断，那么就在函数声明的时候执行。</p>
+<blockquote>
+<p>惰性载入函数的优点是只在执行分支代码的时候牺牲一点儿性能。至于那种方式更合适，就要看你的具体需求而定了。</p>
+</blockquote>
+<h2 id="4、函数绑定"><a href="#4、函数绑定" class="headerlink" title="4、函数绑定"></a>4、函数绑定</h2><p>函数绑定要创建一个函数，可以在特定的this环境中以指定参数调用另一个函数。该技巧常常和回调函数与事件处理程序一起使用，以便在将函数作为变量传递的同时保留代码执行环境，看下面栗子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var person = &#123;</div><div class="line">	name: &quot;Tom&quot;,</div><div class="line">	talk: function() &#123;</div><div class="line">		con(&apos;I am &apos; + this.name);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">var btn = document.getElementById(&quot;bindBtn&quot;);</div><div class="line">btn.addEventListener(&apos;click&apos;, person.talk);</div></pre></td></tr></table></figure>
+<p>上面代码问题看似点击按钮的时候会打印 “I am Tom”, 实际显示的是 “I am “。</p>
+<p>这个问题在于没有保存person.talk()的环境，所以this对象最后是指向了Dom按钮(在IE8中，this指向window)。</p>
+<p>解决这个问题，可以使用一个闭包来解决，看下面代码（以下代码只显示修改的部分）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">btn.addEventListener(&apos;click&apos;, function() &#123;</div><div class="line">	person.talk();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这个解决方案在click事件处理程序内使用了一个闭包直接调用person.talk(); 这只是这段代码的解决方案，创建多个闭包可能会令代码变得难于理解和调试。</p>
+<p>因此，很多JS库实现了一个可以将函数绑定到指定环境的函数。这个函数一般都叫bind()。</p>
+<p>实现一个比较基本的bind()函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function bind(fn, context) &#123;</div><div class="line">	return function() &#123;</div><div class="line">		return fn.apply(context, arguments); //  这里使用的arguments对象是内部函数的，并非bind()的。</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>bind()中创建了一个必报，闭包使用apply()调用传入的函数，并给apply()传递context对象和参数。</p>
+<p>结合上面的代码结合使用自定义bind(方法):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">btn.addEventListener(&apos;click&apos;, bind(person.talk, person));</div></pre></td></tr></table></figure>
+<p>其实在ES5已经为所有函数定义了一个原生bind()方法，使用方法如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">btn.addEventListener(&apos;click&apos;, person.talk.bind(person));</div></pre></td></tr></table></figure>
+<p>只要是将某个函数指针(环境)以值的形式进行传递，同时该函数必须在特定环境中执行，被绑定函数的效用就突显出来了。</p>
+<blockquote>
+<p>主要用于事件处理程序以及setTimeout()和setInterval()。</p>
+<p>然而，被绑定函数与普通函数相比有更多的开销，需要更多的内存，同时也因为多重函数调用稍微慢一点，所以最好只在必要时使用。</p>
+</blockquote>
+<h2 id="5、函数柯里化"><a href="#5、函数柯里化" class="headerlink" title="5、函数柯里化"></a>5、函数柯里化</h2><p>与函数绑定紧密相关的主题是函数柯里化，它用于创建已经设置好了一个或多个参数的函数。</p>
+<p>函数柯里化的基本方法和函数绑定是一样的：使用一个闭包返回一个函数。两者区别在于，当函数被调用时，返回的函数还需要设置一些传入的参数，看栗子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function curry(fn) &#123;</div><div class="line">	var args = Array.prototype.slice.call(arguments, 1);	//  这里截取函数之后的参数</div><div class="line">	return function() &#123;</div><div class="line">		var varArgs = Array.prototype.slice.call(arguments);	//  这里接受curryAdd的参数</div><div class="line">		var finalArgs = args.concat(varArgs);</div><div class="line">		return fn.apply(null, finalArgs);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">function add(num1, num2) &#123;</div><div class="line">	return num1 + num2;</div><div class="line">&#125;</div><div class="line">var curryAdd = curry(add, 5);</div><div class="line">console.log(curryAdd(1));	//  6</div></pre></td></tr></table></figure>
+<p>这里创建第一个参数绑定为5的add()柯里化版本。你也可以像下面这样给出所有的函数参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var curryAdd = curry(add, 5, 1);</div><div class="line">console.log(curryAdd(1));	//  6	因为add()没有接受第三个参数，所以还是6</div></pre></td></tr></table></figure>
+<p>函数柯里化还常常作为函数绑定的一部分包含在其中，构造出更为复杂的bind()函数。以ES5的bind()方法举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">function bind(fn, context) &#123;</div><div class="line">	var args = Array.prototype.slice.call(arguments, 2);	//这里需要改为2，获取函数和环境后面的参数</div><div class="line">	return function() &#123;</div><div class="line">		var varArgs = Array.prototype.slice.call(arguments);	//这里从第三个参数开始接受</div><div class="line">		var finalArgs = args.concat(varArgs);</div><div class="line">		return fn.apply(context, finalArgs);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">var person = &#123;</div><div class="line">	name: &quot;Tom&quot;,</div><div class="line">	talk: function(message1, message2) &#123;</div><div class="line">		console.log(&apos;I am &apos; + this.name + &apos;,&apos; + message1 + &apos;,&apos; + message2 );</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">var talking = person.talk.bind(person, &quot; I am talking &quot;)	 // 这里创建一个第一个参数绑定为“ I am talking ”的函数</div><div class="line">var btn = document.getElementById(&quot;bindBtn&quot;);</div><div class="line">btn.addEventListener(&apos;click&apos;, function() &#123;</div><div class="line">	talking(&apos;I am running&apos;);	//	这里就任意添加talking后面的参数</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这样每次单机按钮就会弹出相应参数的字符串。</p>
+<blockquote>
+<p>PS:这里有个坑呀。btn.addEventListener(‘click’, talking(‘I am running’));  这样点击按钮是不会有反应的。</p>
+<p>总的来说，柯里化的作用可以使代码模块化，减少耦合增强其可维护性。柯里化函数和绑定函数提供了强大的动态函数创建功能，两者不应滥用，只在必要的时候用。</p>
+</blockquote>
+<h1 id="二、防篡改对象"><a href="#二、防篡改对象" class="headerlink" title="二、防篡改对象"></a>二、防篡改对象</h1><p>在编写JavaScript库中，因为JS共享的特性，开发人员很可能会意外地修改别人代码。</p>
+<p>ES5新增了几个方法，通过它们可以指定对象的行为。</p>
+<h2 id="1、不可拓展对象-Object-preventExtensions"><a href="#1、不可拓展对象-Object-preventExtensions" class="headerlink" title="1、不可拓展对象 Object.preventExtensions()"></a>1、不可拓展对象 Object.preventExtensions()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var person1 = &#123; name: &quot;Tom&quot; &#125;;</div><div class="line">person1.age = 20;</div><div class="line">Object.preventExtensions(person1);</div><div class="line">person1.age = 30;</div><div class="line">person1.sex = &quot;boy&quot;</div><div class="line">console.log(person1.age, person1.sex);  // 30, undefined</div><div class="line">delete person1.age;</div><div class="line">console.log(person1.age) // undefined</div></pre></td></tr></table></figure>
+<p>可以看出调用 Object.preventExtensions() 方法后，就不能给person1对象添加新的属性和方法。但是仍然可以修改和删除已有的成员。</p>
+<h2 id="2、密封的对象-Oject-seal"><a href="#2、密封的对象-Oject-seal" class="headerlink" title="2、密封的对象 Oject.seal()"></a>2、密封的对象 Oject.seal()</h2><p>密封对象不可拓展，而且已有的成员[[configurable]]特性将被设置为false。具体功能还是直接看代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var person1 = &#123; name: &quot;Tom&quot; &#125;;</div><div class="line">person1.age = 20;</div><div class="line">Object.seal(person1);</div><div class="line">person1.sex = &quot;boy&quot;;</div><div class="line">console.log(person1.boy);  // undefined</div><div class="line">delete person1.name;</div><div class="line">console.log(person1.name);  // &quot;Tom&quot;</div><div class="line">person1.age = 23;</div><div class="line">console.log(person1.age);  // 23</div></pre></td></tr></table></figure>
+<p>除了不能增删外，只有修改操作是可以进行的。</p>
+<h2 id="3、冻结的对象-Object-freeze"><a href="#3、冻结的对象-Object-freeze" class="headerlink" title="3、冻结的对象 Object.freeze()"></a>3、冻结的对象 Object.freeze()</h2><p>最严格的防篡改级别是冻结对象。冻结对象既不可拓展，又是密封的。而且每个对象数据属性[[Writable]]特性会被设置为false。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var person1 = &#123;</div><div class="line">	name: &quot;Tom&quot;</div><div class="line">&#125;;</div><div class="line">person1.age = 20;</div><div class="line">Object.freeze(person1);</div><div class="line">person1.sex = &quot;boy&quot;;</div><div class="line">console.log(person1.boy); // undefined</div><div class="line">delete person1.name;</div><div class="line">console.log(person1.name); // &quot;Tom&quot;</div><div class="line">person1.age = 23;</div><div class="line">console.log(person1.age); // 20</div></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看出冻结的对象什么也无法修改删除，这样冻结（或密封）主要的库就能够防止这些问题的发生。</p>
+</blockquote>
+<h2 id="三、高级定时器"><a href="#三、高级定时器" class="headerlink" title="三、高级定时器"></a>三、高级定时器</h2><h2 id="1、setTimeout"><a href="#1、setTimeout" class="headerlink" title="1、setTimeout()"></a>1、setTimeout()</h2><p>首先，JavaScript是运行在单线程环境中，而定时器只是表示指定间隔多少时间把代码添加到队列内。</p>
+<p>JS队列执行代码方式还是用代码体验一下吧:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var btn = document.getElementById(&quot;bindBtn&quot;);</div><div class="line">btn.onclick = function() &#123;</div><div class="line">	timer1 = setTimeout(function() &#123;</div><div class="line">		console.log(&apos;执行第一个定时器&apos;); // 第一个执行</div><div class="line">	&#125;, 1000);</div><div class="line">	timer2 = setTimeout(function() &#123;</div><div class="line">		console.log(&apos;执行第二个定时器&apos;); // 第二个执行</div><div class="line">	&#125;, 2000);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>点击按钮后可以发现timer1执行，再过一秒后timer2也执行，一切正常。因为在事件处理程序里面没有其他代码要添加到队列里，效果比较不明显。</p>
+<p>那么我们添加点其他代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var btn = document.getElementById(&quot;bindBtn&quot;);</div><div class="line">btn.onclick = function() &#123;</div><div class="line">	console.time(&apos;time:&apos;);</div><div class="line">	for (var i=0,a=0;i&lt;99999999;i++) &#123;</div><div class="line">		a = Math.floor(Math.random()*10000);</div><div class="line">	&#125;;</div><div class="line">	a=null;</div><div class="line">	console.timeEnd(&apos;time:&apos;);</div><div class="line">	</div><div class="line">	timer1 = setTimeout(function() &#123;</div><div class="line">		console.log(&apos;执行第一个定时器&apos;); // 第一个执行</div><div class="line">	&#125;, 1000);</div><div class="line">	timer2 = setTimeout(function() &#123;</div><div class="line">		console.log(&apos;执行第二个定时器&apos;); // 第二个执行</div><div class="line">	&#125;, 2000);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>现在明显感受到定时器输出的晚了几秒。<br>解析一下:点击后，队列中执行for循环，等待for循环结束后，再把timer1和timer2的代码放入队列相隔设置好的时间后执行。这样一来，就好理解多了。</p>
+<h2 id="2、setInterval"><a href="#2、setInterval" class="headerlink" title="2、setInterval()"></a>2、setInterval()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var btn = document.getElementById(&quot;bindBtn&quot;);</div><div class="line">btn.onclick = function() &#123;</div><div class="line">	var b = 0;</div><div class="line">	timer1 = setInterval(function() &#123;</div><div class="line">		console.time(&apos;time:&apos;);</div><div class="line">		for(var i = 0, a = 0; i &lt; 99999999; i++) &#123;</div><div class="line">			a = Math.floor(Math.random() * 10000);</div><div class="line">		&#125;;</div><div class="line">		a = null;</div><div class="line">		console.log(&apos;第&apos; + ++b + &apos;次定时器执行&apos;);</div><div class="line">		console.timeEnd(&apos;time:&apos;); // 基本上每次都间隔2.5秒</div><div class="line">	&#125;, 2000);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这个例子中第一个定时器是在2000ms处添加到队列中，但是代码块需要2.5s左右时间执行，所以第一个打印记录时间是4.5s。而在4s的时候本来是应该执行第二个定时器的代码，这时候就会没有延迟的立即执行第二个定时器代码在6s的时候显示”第2次定时器执行”。</p>
+<p>书上有说会缺失间隔的代码，不知道是执行的代码时间不够长还是怎样，执行起来并没有。了解详情的还望指教一下。</p>
+<h2 id="3、Yielding-Processes"><a href="#3、Yielding-Processes" class="headerlink" title="3、Yielding Processes"></a>3、Yielding Processes</h2><p>JavaScript在浏览器中有一个限制是长时间运行脚本的制约，会弹出一个浏览器错误的对话框，告诉用户某个脚本会用过长的时间执行，询问是允许其继续执行还是停止它。</p>
+<p>脚本长时间运行问题通常是两个原因之一造成的：过深的嵌套、过长的函数调用或者是进行大量处理的循环。</p>
+<p>其实就是当你发现某个循环占用了大量时间，如果这个数据的处理不会造成其他运行的阻塞。</p>
+<p>那么你就可以用定时器分割这个循环。这是一种叫“数组分块”的技术，小块小块地处理数组。比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">for (var i = 0,len = data.length; i &lt; len; i++) &#123;</div><div class="line">	process(data[i]);</div><div class="line">&#125;</div><div class="line">	这个事件处理执行产生有可能会造成页面卡顿，这非常影响用户体验，使用数组分块来优化：</div><div class="line">setTimeout(function()&#123;</div><div class="line">	var item = array.shift();</div><div class="line">	process(item); //  执行某操作</div><div class="line">	</div><div class="line">	if(array.length &gt; 0) &#123;</div><div class="line">		setTimeout(arguments.callee, 100);  // 调用同一个匿名函数</div><div class="line">	&#125;</div><div class="line">&#125;, 100);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>数组分块的重要性在于它可以将多个项目的处理在执行队列上分开。</p>
+<p>一旦某个函数需要花50ms以上的时间完成，那么最好看看能否将任务分割为一系列可以使用定时器的小任务。</p>
+</blockquote>
+<h2 id="4、函数节流"><a href="#4、函数节流" class="headerlink" title="4、函数节流"></a>4、函数节流</h2><p>函数节流的基本思想是指，某些代码不可以在没有间断的情况连续重复执行。第一次调用函数创建一个定时器，在指定的时间间隔之后运行代码。当第二次调用该函数时，它会清楚前一次定时器并设置另一个。</p>
+<p>以下是该模式的基本形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">var person = &#123;</div><div class="line">	runTime: null,</div><div class="line"></div><div class="line">	//	实际进行处理的方法</div><div class="line">	run: function() &#123;</div><div class="line">		//实际执行的代码</div><div class="line">	&#125;,</div><div class="line"></div><div class="line">	//	初始处理调用的方法</div><div class="line">	readyRun: function() &#123;</div><div class="line">		clearTimeout(this.runTime);</div><div class="line">		var that = this;</div><div class="line">		this.timeoutId = setTimeout(function() &#123;</div><div class="line">			that.run();</div><div class="line">		&#125;, 1000);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这段代码中，拟人化的创建了一个人，有两个方法：run()和readyRun()。前者是实际进行的动作，后者是初始化动作所必须调用的。</p>
+<p>当调用readyRun()，第一步是清楚存好的runTime，来阻止之前的调用被执行。然后创建一个新的定时器调用run()。由于setTimeout中用到的函数环境总是window，所以有必要保存this的引用方便使用。</p>
+<p>这样的好处是即使1000ms内调用了readRun(),run()也只会调用一次。（毕竟人不可能一秒跑那么多步的好嘛！）</p>
+<p>节流在resize，scorll事件中是最常用的。如果你基于该事件来改变页面布局的话，最好控制处理的频率，以确保浏览器不会再极短的时间内进行过多的计算。</p>
+<p>这里先设计一个函数封装一下这个方法，方便以后常用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function throttle(fn, delay, context) &#123;</div><div class="line">	clearTimeout(fn.throTime); //	默认你给需要执行的函数里都有throTime属性</div><div class="line">	fn.throTime = setTimeout(function() &#123;</div><div class="line">		fn.call(context); //	函数在指定环境执行</div><div class="line">	&#125;, delay);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>写一个滑动滚轮改变盒子大小的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function changeBg() &#123;</div><div class="line">	var div = document.getElementById(&quot;dragTarget&quot;);</div><div class="line">	div.style.width = div.offsetWidth + 10 + &apos;px&apos;;</div><div class="line">	div.style.height = div.offsetHeight + 10 + &apos;px&apos;;</div><div class="line">&#125;;</div><div class="line">	下面使用优化一下onscroll的事件处理程序</div><div class="line">window.onscroll = function() &#123;</div><div class="line">	throttle(changeBg, 100);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里多数情况下用户使感觉不到变化的，可是这大大节省了浏览器的计算。<br>只要代码是周期性执行的，都应该使用节流，并且适当控制速率。</p>
+<h1 id="四、自定义事件"><a href="#四、自定义事件" class="headerlink" title="四、自定义事件"></a>四、自定义事件</h1><p>如果每个对象都有对其他所有对象的引用，那么整个代码就会紧密耦合，同时维护也变得很困难，因为对某个对象的修改也会影响到其他对象。使用自定义事件有助于解耦相关对象，保持功能的隔绝。</p>
+<p>实际上，在很多情况下，触发事件的代码和舰艇事件的代码是完全分离的。</p>
+<p>自定义事件背后的概念是创建一个管理事件的对象，让其他对象监听那些事件。实现此功能的基本模式可以如下定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">function EventTarget() &#123;</div><div class="line">	this.handlers = &#123;&#125;; //  存放事件名的对象</div><div class="line">&#125;</div><div class="line">EventTarget.prototype = &#123;</div><div class="line">	con: function() &#123; //	输出当前存放的所有事件名</div><div class="line">		console.log(JSON.stringify(this.handlers));</div><div class="line">	&#125;,</div><div class="line">	addHandler: function(type, handler) &#123; // 添加事件</div><div class="line">		if(typeof this.handlers[type] == &quot;undefined&quot;) &#123;</div><div class="line">			this.handlers[type] = []; // 如果没有就创建一个新的事件</div><div class="line">		&#125;</div><div class="line">		this.handlers[type].push(handler); //  把事件处理程序添加到事件的数组里面</div><div class="line">	&#125;,</div><div class="line">	fire: function(event) &#123; // 触发事件</div><div class="line">		if(!event.target) &#123;</div><div class="line">			event.target = this;</div><div class="line">		&#125;</div><div class="line">		if(this.handlers[event.type] instanceof Array) &#123;</div><div class="line">			var handlers = this.handlers[event.type];</div><div class="line">			for(var i = 0, len = handlers.length; i &lt; len; i++) &#123;</div><div class="line">				handlers[i](event);</div><div class="line">			&#125;</div><div class="line">		&#125; else &#123;</div><div class="line">			console.log(&apos;没有注册过该事件&apos;);</div><div class="line">		&#125;</div><div class="line">	&#125;,</div><div class="line">	removeHandler: function(type, handler) &#123; // 移除指定事件处理程序</div><div class="line">		if(this.handlers[event.type] instanceof Array) &#123;</div><div class="line">			var handlers = this.handlers[type];</div><div class="line">			for(var i = 0, len = handlers.length; i &lt; len; i++) &#123;</div><div class="line">				if(handlers[i] === handler) &#123; // 找到事件处理程序的位置，跳出循环</div><div class="line">					break;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125; else &#123;</div><div class="line">			console.log(&apos;没有注册过该事件&apos;);</div><div class="line">		&#125;</div><div class="line">		handlers.splice(i, 1); // 删除事件处理程序</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后，使用EventTarget类型的自定义事件可以如下使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function handleMessage(event) &#123;</div><div class="line">	console.log(&quot;Message received&quot; + event.message);</div><div class="line">&#125;</div><div class="line">var dom = new EventTarget();</div><div class="line">dom.addHandler(&quot;dianJi&quot;,handleMessage);</div><div class="line">dom.fire(&#123;type:&apos;dianJi&apos;, message: &apos;I am Click&apos;&#125;);	// &quot;Message receivedI am Click&quot;</div><div class="line">dom.removeHandler(&quot;dianJi&quot;,handleMessage);</div><div class="line">dom.fire(&#123;type:&apos;dianJi&apos;, message: &apos;I am Click&apos;&#125;);	// Error: Cannot read property &apos;type&apos; of undefined&quot;</div><div class="line">	其他对象可以继承这种自定义对象</div><div class="line">function Person(name, age) &#123;</div><div class="line">	this.name = name;</div><div class="line">	this.age = age;</div><div class="line">&#125;</div><div class="line">Person.prototype = new EventTarget();</div><div class="line">var person = new Person(&apos;Tom&apos;, 20);</div><div class="line">function handleMessage(event) &#123;</div><div class="line">	console.log(&quot;I talk &quot; + event.message);</div><div class="line">&#125;</div><div class="line">person.addHandler(&quot;say&quot;, handleMessage);</div><div class="line">person.fire(&#123;type:&apos;say&apos;, message:&apos;I am Person&apos;&#125;); // &quot;I talk I am Person&quot;</div></pre></td></tr></table></figure>
+<h1 id="五、拖放"><a href="#五、拖放" class="headerlink" title="五、拖放"></a>五、拖放</h1><p>拖放是一种非常流行的用户界面模式。他的概念很简单：点击某个对象，并按住鼠标按钮不放，将鼠标移动到另一个区域，然后释放鼠标按钮将对象“放”在这里。</p>
+<p>简单的拖放界面可用一下代码实现:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">var DragDrop = function() &#123;</div><div class="line">	var dragging = null,	// 拖放对象</div><div class="line">		diffX = 0,</div><div class="line">		diffY = 0;</div><div class="line">	function handleEvent(event) &#123;</div><div class="line">		// 获取事件和目标</div><div class="line">		event = event || window.event;</div><div class="line">		var target = event.target || window.event.target;		</div><div class="line">		switch(event.type) &#123;</div><div class="line">			case &quot;mousedown&quot;:</div><div class="line">				console.log(target)</div><div class="line">				if(target.className.indexOf(&quot;draggable&quot;) &gt; -1) &#123;</div><div class="line">					dragging = target;</div><div class="line">					diffX = event.clientX - target.offsetLeft;</div><div class="line">					diffY = event.clientY - target.offsetTop;</div><div class="line">				&#125;</div><div class="line">				break;</div><div class="line">			case &quot;mousemove&quot;:</div><div class="line">				if(dragging !== null) &#123;</div><div class="line">					dragging.style.left = event.clientX - diffX + &apos;px&apos;;</div><div class="line">					dragging.style.top = event.clientY - diffY + &apos;px&apos;;</div><div class="line">				&#125;</div><div class="line">				break;</div><div class="line">			case &quot;mouseup&quot;:</div><div class="line">				dragging = null;</div><div class="line">				break;</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line">	return &#123;</div><div class="line">		enable: function() &#123;</div><div class="line">			document.addEventListener(&apos;mousedown&apos;, handleEvent);</div><div class="line">			document.addEventListener(&apos;mousemove&apos;, handleEvent);</div><div class="line">			document.addEventListener(&apos;mouseup&apos;, handleEvent);</div><div class="line">		&#125;,</div><div class="line">		disable: function() &#123;</div><div class="line">			document.removeEventListener(&apos;mousedown&apos;, handleEvent);</div><div class="line">			document.removeEventListener(&apos;mousemove&apos;, handleEvent);</div><div class="line">			document.removeEventListener(&apos;mouseup&apos;, handleEvent);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">DragDrop().enable();</div></pre></td></tr></table></figure></p>
+<p>DragDrop对象封装了拖放的所有基本功能。拖放的时候回自动针对所有包含“draggable”类的元素启用。</p>
+<blockquote>
+<p>为了元素能被拖放，它必须是绝对定位的。</p>
+</blockquote>
+<p>结合前面的自定义事件完善该功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">var dragdrop = new EventTarget();</div><div class="line">var DragDrop = function() &#123;</div><div class="line">	var dragging = null,</div><div class="line">		diffX = 0,</div><div class="line">		diffY = 0;</div><div class="line"></div><div class="line">	function handleEvent(event) &#123;</div><div class="line">		event = event || window.event;</div><div class="line">		var target = event.target;</div><div class="line">		switch(event.type) &#123;</div><div class="line">			case &quot;mousedown&quot;:</div><div class="line">				if(target.className.indexOf(&quot;draggable&quot;) &gt; -1) &#123;</div><div class="line">					dragging = target;</div><div class="line">					diffX = event.clientX - target.offsetLeft;</div><div class="line">					diffY = event.clientY - target.offsetTop;</div><div class="line">					//  这里触发自定义事件，比如：</div><div class="line">					dragdrop.fire(&#123;</div><div class="line">						type: &quot;dragStart&quot;,</div><div class="line">						target: dragging</div><div class="line">					&#125;);</div><div class="line">				&#125;</div><div class="line">				break;</div><div class="line">			case &quot;mousemove&quot;:</div><div class="line">				if(dragging !== null) &#123;</div><div class="line">					dragging.style.left = event.clientX - diffX + &apos;px&apos;;</div><div class="line">					dragging.style.top = event.clientY - diffY + &apos;px&apos;;</div><div class="line">					//  这里触发自定义事件，比如：</div><div class="line">					dragdrop.fire(&#123;</div><div class="line">						type: &quot;dragging&quot;,</div><div class="line">						target: dragging</div><div class="line">					&#125;);</div><div class="line">				&#125;</div><div class="line">				break;</div><div class="line">			case &quot;mouseup&quot;:</div><div class="line">				//  这里触发自定义事件，比如：</div><div class="line">				dragdrop.fire(&#123;</div><div class="line">					type: &quot;dragend&quot;,</div><div class="line">					target: dragging</div><div class="line">				&#125;);</div><div class="line">				dragging = null;</div><div class="line">				break;</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line">	dragdrop.enable = function() &#123;</div><div class="line">		document.addEventListener(&apos;mousedown&apos;, handleEvent);</div><div class="line">		document.addEventListener(&apos;mousemove&apos;, handleEvent);</div><div class="line">		document.addEventListener(&apos;mouseup&apos;, handleEvent);</div><div class="line">	&#125;</div><div class="line">	dragdrop.disable = function() &#123;</div><div class="line">		document.removeEventListener(&apos;mousedown&apos;, handleEvent);</div><div class="line">		document.removeEventListener(&apos;mousemove&apos;, handleEvent);</div><div class="line">		document.removeEventListener(&apos;mouseup&apos;, handleEvent);</div><div class="line">	&#125;</div><div class="line">	return dragdrop;</div><div class="line">&#125;</div><div class="line">DragDrop().addHandler(&quot;dragStart&quot;, function(event) &#123;</div><div class="line">	event.target.innerHTML = &quot;准备移动！&quot;;</div><div class="line">&#125;);</div><div class="line">DragDrop().addHandler(&quot;dragging&quot;, function(event) &#123;</div><div class="line">	event.target.innerHTML = &quot;正在移动ing！&quot;;</div><div class="line">&#125;);</div><div class="line">DragDrop().addHandler(&quot;dragend&quot;, function(event) &#123;</div><div class="line">	event.target.innerHTML = &quot;移动结束！&quot;;</div><div class="line">&#125;);</div><div class="line">DragDrop().enable();</div></pre></td></tr></table></figure>
+<p>其实这里有个坑跟书上的不一样，就是new EventTarget()要在外一层new。</p>
+<hr>
+<blockquote>
+<h1 id="以上就是《JavaScript高级程序设计》书上的高级技巧和本人对这些知识点的一些理解，所码的文章。"><a href="#以上就是《JavaScript高级程序设计》书上的高级技巧和本人对这些知识点的一些理解，所码的文章。" class="headerlink" title="以上就是《JavaScript高级程序设计》书上的高级技巧和本人对这些知识点的一些理解，所码的文章。"></a>以上就是《JavaScript高级程序设计》书上的高级技巧和本人对这些知识点的一些理解，所码的文章。</h1><p>本文经常更新知识点以及修正一些错误，因此转载请保留原出处，方便溯源，避免陈旧错误知识的误导，同时有更好的阅读体验。</p>
+</blockquote>
+
+      
+    </div>
+	
+	<div>
+	  
+	    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束感谢您的阅读-------------</div>
+    
+</div>
+	  
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/我的第一个文章/" rel="next" title="这是我的第一篇文章">
+                <i class="fa fa-chevron-left"></i> 这是我的第一篇文章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/JavaScript — 基本算法学习/" rel="prev" title="JavaScript — 基本算法学习">
+                JavaScript — 基本算法学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+         <!--MOB SHARE BEGIN-->
+    <div class="-mob-share-ui-button -mob-share-open">分享</div>
+                                <div class="-mob-share-ui" style="display: none">
+                                    <ul class="-mob-share-list">
+                                        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+                                        <li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>
+                                        <li class="-mob-share-qzone"><p>QQ空间</p></li>
+                                        <li class="-mob-share-qq"><p>QQ好友</p></li>
+                                        <li class="-mob-share-weixin"><p>微信</p></li>
+                                        <li class="-mob-share-douban"><p>豆瓣</p></li>
+                                        <li class="-mob-share-renren"><p>人人网</p></li>
+                                        <li class="-mob-share-kaixin"><p>开心网</p></li>
+                                        <li class="-mob-share-facebook"><p>Facebook</p></li>
+                                        <li class="-mob-share-twitter"><p>Twitter</p></li>
+                                        <li class="-mob-share-pocket"><p>Pocket</p></li>
+                                        <li class="-mob-share-google"><p>Google+</p></li>
+                                        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+                                        <li class="-mob-share-mingdao"><p>明道</p></li>
+                                        <li class="-mob-share-pengyou"><p>朋友网</p></li>
+                                        <li class="-mob-share-tumblr"><p>Tumblr</p></li>
+                                        <li class="-mob-share-instapaper"><p>Instapaper</p></li>
+                                        <li class="-mob-share-linkedin"><p>LinkedIn</p></li>
+                                    </ul>
+                                    <div class="-mob-share-close">取消</div>
+                                </div>
+                                <div class="-mob-share-ui-bg"></div>
+                                <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=21b10bbc8adca"></script>
+                                <!--MOB SHARE END-->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Akira" />
+          <p class="site-author-name" itemprop="name">Akira</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要："><span class="nav-number">1.</span> <span class="nav-text">摘要：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、高级函数"><span class="nav-number">2.</span> <span class="nav-text">一、高级函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、安全的类型检测"><span class="nav-number">2.1.</span> <span class="nav-text">1、安全的类型检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、作用域安全的构造函数"><span class="nav-number">2.2.</span> <span class="nav-text">2、作用域安全的构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、惰性载入函数"><span class="nav-number">2.3.</span> <span class="nav-text">3、惰性载入函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、函数绑定"><span class="nav-number">2.4.</span> <span class="nav-text">4、函数绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、函数柯里化"><span class="nav-number">2.5.</span> <span class="nav-text">5、函数柯里化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、防篡改对象"><span class="nav-number">3.</span> <span class="nav-text">二、防篡改对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、不可拓展对象-Object-preventExtensions"><span class="nav-number">3.1.</span> <span class="nav-text">1、不可拓展对象 Object.preventExtensions()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、密封的对象-Oject-seal"><span class="nav-number">3.2.</span> <span class="nav-text">2、密封的对象 Oject.seal()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、冻结的对象-Object-freeze"><span class="nav-number">3.3.</span> <span class="nav-text">3、冻结的对象 Object.freeze()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、高级定时器"><span class="nav-number">3.4.</span> <span class="nav-text">三、高级定时器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1、setTimeout"><span class="nav-number">3.5.</span> <span class="nav-text">1、setTimeout()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、setInterval"><span class="nav-number">3.6.</span> <span class="nav-text">2、setInterval()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、Yielding-Processes"><span class="nav-number">3.7.</span> <span class="nav-text">3、Yielding Processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、函数节流"><span class="nav-number">3.8.</span> <span class="nav-text">4、函数节流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、自定义事件"><span class="nav-number">4.</span> <span class="nav-text">四、自定义事件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、拖放"><span class="nav-number">5.</span> <span class="nav-text">五、拖放</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以上就是《JavaScript高级程序设计》书上的高级技巧和本人对这些知识点的一些理解，所码的文章。"><span class="nav-number">6.</span> <span class="nav-text">以上就是《JavaScript高级程序设计》书上的高级技巧和本人对这些知识点的一些理解，所码的文章。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Akira</span>
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  1225658998@qq.com
+</div>
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
