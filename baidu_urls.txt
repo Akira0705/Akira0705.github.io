@@ -1,0 +1,12 @@
+http://akira.wang/2018/02/15/小明同学的 二〇一七 总结 && 二〇一八 展望（FLAG）/
+http://akira.wang/2018/02/08/浅谈 Promise 实现/
+http://akira.wang/2018/02/08/Re0：从零开始的JavaScript - 异步流程控制/
+http://akira.wang/2018/02/08/Re0：从零开始的JavaScript - 观察者模式的理解/
+http://akira.wang/2018/02/08/视音频编解码技术简单概述/
+http://akira.wang/2017/10/22/区区一个死宅/
+http://akira.wang/2017/10/17/JavaScript — 动态规划&&贪心算法/
+http://akira.wang/2017/10/17/addEventListener 中 事件用bind指向this 后，无法移除事件问题/
+http://akira.wang/2017/10/17/JavaScript — 搜索算法/
+http://akira.wang/2017/10/17/JavaScript — 基本算法学习/
+http://akira.wang/2017/09/30/JavaScript高级技巧/
+http://akira.wang/2017/07/25/我的第一个文章/
