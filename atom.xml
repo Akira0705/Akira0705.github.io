@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://akira.wang/"/>
   <updated>2018-02-15T06:30:53.276Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://akira.wang/</id>
   
   <author>
     <name>Akira</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>小明同学的 二〇一七 总结 &amp;&amp; 二〇一八 展望（FLAG）</title>
-    <link href="http://yoursite.com/2018/02/15/%E5%B0%8F%E6%98%8E%E5%90%8C%E5%AD%A6%E7%9A%84%20%E4%BA%8C%E3%80%87%E4%B8%80%E4%B8%83%20%E6%80%BB%E7%BB%93%20&amp;&amp;%20%E4%BA%8C%E3%80%87%E4%B8%80%E5%85%AB%20%E5%B1%95%E6%9C%9B%EF%BC%88FLAG%EF%BC%89/"/>
-    <id>http://yoursite.com/2018/02/15/小明同学的 二〇一七 总结 &amp;&amp; 二〇一八 展望（FLAG）/</id>
+    <link href="http://akira.wang/2018/02/15/%E5%B0%8F%E6%98%8E%E5%90%8C%E5%AD%A6%E7%9A%84%20%E4%BA%8C%E3%80%87%E4%B8%80%E4%B8%83%20%E6%80%BB%E7%BB%93%20&amp;&amp;%20%E4%BA%8C%E3%80%87%E4%B8%80%E5%85%AB%20%E5%B1%95%E6%9C%9B%EF%BC%88FLAG%EF%BC%89/"/>
+    <id>http://akira.wang/2018/02/15/小明同学的 二〇一七 总结 &amp;&amp; 二〇一八 展望（FLAG）/</id>
     <published>2018-02-15T03:31:59.018Z</published>
     <updated>2018-02-15T06:30:53.276Z</updated>
     
@@ -34,17 +34,17 @@
     
     </summary>
     
-      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://akira.wang/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="日常" scheme="http://yoursite.com/tags/%E6%97%A5%E5%B8%B8/"/>
+      <category term="日常" scheme="http://akira.wang/tags/%E6%97%A5%E5%B8%B8/"/>
     
   </entry>
   
   <entry>
     <title>Re0：从零开始的JavaScript - 浅谈 Promise 实现</title>
-    <link href="http://yoursite.com/2018/02/08/%E6%B5%85%E8%B0%88%20Promise%20%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://yoursite.com/2018/02/08/浅谈 Promise 实现/</id>
+    <link href="http://akira.wang/2018/02/08/%E6%B5%85%E8%B0%88%20Promise%20%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://akira.wang/2018/02/08/浅谈 Promise 实现/</id>
     <published>2018-02-08T13:08:18.214Z</published>
     <updated>2018-02-08T13:07:41.086Z</updated>
     
@@ -60,17 +60,17 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>Re0：从零开始的JavaScript - 异步流程控制</title>
-    <link href="http://yoursite.com/2018/02/08/Re0%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84JavaScript%20-%20%E5%BC%82%E6%AD%A5%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/"/>
-    <id>http://yoursite.com/2018/02/08/Re0：从零开始的JavaScript - 异步流程控制/</id>
+    <link href="http://akira.wang/2018/02/08/Re0%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84JavaScript%20-%20%E5%BC%82%E6%AD%A5%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/"/>
+    <id>http://akira.wang/2018/02/08/Re0：从零开始的JavaScript - 异步流程控制/</id>
     <published>2018-02-08T13:08:07.788Z</published>
     <updated>2018-02-08T13:07:13.996Z</updated>
     
@@ -85,17 +85,17 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>Re0：从零开始的JavaScript - 观察者模式的理解</title>
-    <link href="http://yoursite.com/2018/02/08/Re0%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84JavaScript%20-%20%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%90%86%E8%A7%A3/"/>
-    <id>http://yoursite.com/2018/02/08/Re0：从零开始的JavaScript - 观察者模式的理解/</id>
+    <link href="http://akira.wang/2018/02/08/Re0%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84JavaScript%20-%20%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%90%86%E8%A7%A3/"/>
+    <id>http://akira.wang/2018/02/08/Re0：从零开始的JavaScript - 观察者模式的理解/</id>
     <published>2018-02-08T13:08:05.088Z</published>
     <updated>2018-02-08T13:07:28.836Z</updated>
     
@@ -111,17 +111,17 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>视音频编解码技术简单概述</title>
-    <link href="http://yoursite.com/2018/02/08/%E8%A7%86%E9%9F%B3%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E6%8A%80%E6%9C%AF%E7%AE%80%E5%8D%95%E6%A6%82%E8%BF%B0/"/>
-    <id>http://yoursite.com/2018/02/08/视音频编解码技术简单概述/</id>
+    <link href="http://akira.wang/2018/02/08/%E8%A7%86%E9%9F%B3%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E6%8A%80%E6%9C%AF%E7%AE%80%E5%8D%95%E6%A6%82%E8%BF%B0/"/>
+    <id>http://akira.wang/2018/02/08/视音频编解码技术简单概述/</id>
     <published>2018-02-08T12:50:14.572Z</published>
     <updated>2018-02-08T12:53:16.956Z</updated>
     
@@ -136,17 +136,17 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>区区一个死宅</title>
-    <link href="http://yoursite.com/2017/10/22/%E5%8C%BA%E5%8C%BA%E4%B8%80%E4%B8%AA%E6%AD%BB%E5%AE%85/"/>
-    <id>http://yoursite.com/2017/10/22/区区一个死宅/</id>
+    <link href="http://akira.wang/2017/10/22/%E5%8C%BA%E5%8C%BA%E4%B8%80%E4%B8%AA%E6%AD%BB%E5%AE%85/"/>
+    <id>http://akira.wang/2017/10/22/区区一个死宅/</id>
     <published>2017-10-22T15:29:46.490Z</published>
     <updated>2017-10-22T15:41:23.962Z</updated>
     
@@ -161,17 +161,17 @@
     
     </summary>
     
-      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://akira.wang/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="日常" scheme="http://yoursite.com/tags/%E6%97%A5%E5%B8%B8/"/>
+      <category term="日常" scheme="http://akira.wang/tags/%E6%97%A5%E5%B8%B8/"/>
     
   </entry>
   
   <entry>
     <title>JavaScript — 动态规划&amp;&amp;贪心算法</title>
-    <link href="http://yoursite.com/2017/10/17/JavaScript%20%E2%80%94%20%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92&amp;&amp;%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/"/>
-    <id>http://yoursite.com/2017/10/17/JavaScript — 动态规划&amp;&amp;贪心算法/</id>
+    <link href="http://akira.wang/2017/10/17/JavaScript%20%E2%80%94%20%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92&amp;&amp;%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/"/>
+    <id>http://akira.wang/2017/10/17/JavaScript — 动态规划&amp;&amp;贪心算法/</id>
     <published>2017-10-17T10:14:30.210Z</published>
     <updated>2017-10-17T10:19:05.649Z</updated>
     
@@ -188,17 +188,17 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>addEventListener中事件用bind指向this后,无法移除事件问题.</title>
-    <link href="http://yoursite.com/2017/10/17/addEventListener%20%E4%B8%AD%20%E4%BA%8B%E4%BB%B6%E7%94%A8bind%E6%8C%87%E5%90%91this%20%E5%90%8E%EF%BC%8C%E6%97%A0%E6%B3%95%E7%A7%BB%E9%99%A4%E4%BA%8B%E4%BB%B6%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2017/10/17/addEventListener 中 事件用bind指向this 后，无法移除事件问题/</id>
+    <link href="http://akira.wang/2017/10/17/addEventListener%20%E4%B8%AD%20%E4%BA%8B%E4%BB%B6%E7%94%A8bind%E6%8C%87%E5%90%91this%20%E5%90%8E%EF%BC%8C%E6%97%A0%E6%B3%95%E7%A7%BB%E9%99%A4%E4%BA%8B%E4%BB%B6%E9%97%AE%E9%A2%98/"/>
+    <id>http://akira.wang/2017/10/17/addEventListener 中 事件用bind指向this 后，无法移除事件问题/</id>
     <published>2017-10-17T10:14:28.263Z</published>
     <updated>2017-10-17T10:13:06.117Z</updated>
     
@@ -213,17 +213,17 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>JavaScript — 搜索算法</title>
-    <link href="http://yoursite.com/2017/10/17/JavaScript%20%E2%80%94%20%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/"/>
-    <id>http://yoursite.com/2017/10/17/JavaScript — 搜索算法/</id>
+    <link href="http://akira.wang/2017/10/17/JavaScript%20%E2%80%94%20%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/"/>
+    <id>http://akira.wang/2017/10/17/JavaScript — 搜索算法/</id>
     <published>2017-10-17T10:14:21.482Z</published>
     <updated>2017-10-17T10:13:45.826Z</updated>
     
@@ -239,17 +239,17 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>JavaScript — 基本算法学习</title>
-    <link href="http://yoursite.com/2017/10/17/JavaScript%20%E2%80%94%20%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://yoursite.com/2017/10/17/JavaScript — 基本算法学习/</id>
+    <link href="http://akira.wang/2017/10/17/JavaScript%20%E2%80%94%20%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://akira.wang/2017/10/17/JavaScript — 基本算法学习/</id>
     <published>2017-10-17T10:14:19.207Z</published>
     <updated>2017-10-17T10:13:26.828Z</updated>
     
@@ -264,17 +264,17 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>《JavaScript高级程序设计》—— 高级技巧</title>
-    <link href="http://yoursite.com/2017/09/30/JavaScript%E9%AB%98%E7%BA%A7%E6%8A%80%E5%B7%A7/"/>
-    <id>http://yoursite.com/2017/09/30/JavaScript高级技巧/</id>
+    <link href="http://akira.wang/2017/09/30/JavaScript%E9%AB%98%E7%BA%A7%E6%8A%80%E5%B7%A7/"/>
+    <id>http://akira.wang/2017/09/30/JavaScript高级技巧/</id>
     <published>2017-09-30T05:30:38.537Z</published>
     <updated>2017-09-30T05:57:13.098Z</updated>
     
@@ -290,17 +290,17 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>这是我的第一篇文章</title>
-    <link href="http://yoursite.com/2017/07/25/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%96%87%E7%AB%A0/"/>
-    <id>http://yoursite.com/2017/07/25/我的第一个文章/</id>
+    <link href="http://akira.wang/2017/07/25/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%96%87%E7%AB%A0/"/>
+    <id>http://akira.wang/2017/07/25/我的第一个文章/</id>
     <published>2017-07-25T03:00:58.446Z</published>
     <updated>2017-09-30T05:33:57.289Z</updated>
     
@@ -317,10 +317,10 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://akira.wang/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="js" scheme="http://yoursite.com/tags/js/"/>
+      <category term="js" scheme="http://akira.wang/tags/js/"/>
     
   </entry>
   
