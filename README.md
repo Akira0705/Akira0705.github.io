@@ -1,9 +1,7 @@
-Akira �� ǰ������
+Akira
 
-��ϵ��ʽ��1225658998@qq.com
+坐标：北京
 
-���꣺�㶫��ݸ
+搭建此博客仅供自己学习总结
 
-��˲��������Լ�ѧϰ��
-
-Git��ַ��https://github.com/Akira0705
+Git地址：https://github.com/Akira0705

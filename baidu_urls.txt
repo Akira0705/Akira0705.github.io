@@ -1,3 +1,5 @@
+http://akira.wang/老生常谈 输入url到页面加载显示完成，中间都经历了什么 && 浏览器缓存解析/
+http://akira.wang/Re0：从零开始的JavaScript - 函数式编程之柯里化/
 http://akira.wang/小明同学的 二〇一七 总结 && 二〇一八 展望（FLAG）/
 http://akira.wang/浅谈 Promise 实现/
 http://akira.wang/Re0：从零开始的JavaScript - 异步流程控制/
