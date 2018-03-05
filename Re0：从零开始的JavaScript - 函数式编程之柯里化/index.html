@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JavaScript," />
 
 
 
@@ -96,17 +96,18 @@
 
 
 <meta name="description" content="之前也有了解过柯里化。可是，在实际开发中，对柯里化的运用不是太多，因为不太清楚应该在哪些情况下应该使用它们。 看了ES6入门，看到了函数式编程，现在又再回来复习一下柯里化  柯里化 Curry柯里化就是在特定的作用域中执行指定的函数,并只传递函数的一部分参数来调用它，返回一个函数去处理剩下的参数。 参数复用先来看个例子，创建一个 say 函数，打印出带有名字，前缀和问候语的一句话。 1234con">
+<meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Akira">
+<meta property="og:title" content="Re0：从零开始的JavaScript - 函数式编程之柯里化">
 <meta property="og:url" content="http://akira.wang/Re0：从零开始的JavaScript - 函数式编程之柯里化/index.html">
 <meta property="og:site_name" content="Akira">
 <meta property="og:description" content="之前也有了解过柯里化。可是，在实际开发中，对柯里化的运用不是太多，因为不太清楚应该在哪些情况下应该使用它们。 看了ES6入门，看到了函数式编程，现在又再回来复习一下柯里化  柯里化 Curry柯里化就是在特定的作用域中执行指定的函数,并只传递函数的一部分参数来调用它，返回一个函数去处理剩下的参数。 参数复用先来看个例子，创建一个 say 函数，打印出带有名字，前缀和问候语的一句话。 1234con">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2776707119,3878134448&fm=27&gp=0.jpg">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520271908743&di=c89623d4474514f028fef119d229c1a9&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fblog%2F201608%2F17%2F20160817202606_hftyG.jpeg">
-<meta property="og:updated_time" content="2018-03-05T14:57:46.984Z">
+<meta property="og:updated_time" content="2018-03-05T15:03:08.445Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Akira">
+<meta name="twitter:title" content="Re0：从零开始的JavaScript - 函数式编程之柯里化">
 <meta name="twitter:description" content="之前也有了解过柯里化。可是，在实际开发中，对柯里化的运用不是太多，因为不太清楚应该在哪些情况下应该使用它们。 看了ES6入门，看到了函数式编程，现在又再回来复习一下柯里化  柯里化 Curry柯里化就是在特定的作用域中执行指定的函数,并只传递函数的一部分参数来调用它，返回一个函数去处理剩下的参数。 参数复用先来看个例子，创建一个 say 函数，打印出带有名字，前缀和问候语的一句话。 1234con">
 <meta name="twitter:image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2776707119,3878134448&fm=27&gp=0.jpg">
 
@@ -142,7 +143,7 @@
 
 
 
-  <title> | Akira</title>
+  <title>Re0：从零开始的JavaScript - 函数式编程之柯里化 | Akira</title>
   
 
 
@@ -301,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Re0：从零开始的JavaScript - 函数式编程之柯里化</h1>
         
 
         <div class="post-meta">
@@ -323,6 +324,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -462,6 +485,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
 
       
       
@@ -481,8 +510,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/老生常谈 输入url到页面加载显示完成，中间都经历了什么 && 浏览器缓存解析/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/老生常谈 输入url到页面加载显示完成，中间都经历了什么 && 浏览器缓存解析/" rel="prev" title="老生常谈 输入url到页面加载显示完成，中间都经历了什么 && 浏览器缓存解析">
+                老生常谈 输入url到页面加载显示完成，中间都经历了什么 && 浏览器缓存解析 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
