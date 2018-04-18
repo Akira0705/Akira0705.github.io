@@ -1,3 +1,5 @@
+http://akira.wang/2018.4.18 刷题刷题/
+http://akira.wang/2018.4.17 元气满满的一天，适合刷题/
 http://akira.wang/老生常谈 输入url到页面加载显示完成，中间都经历了什么 && 浏览器缓存解析/
 http://akira.wang/Re0：从零开始的JavaScript - 函数式编程之柯里化/
 http://akira.wang/小明同学的 二〇一七 总结 && 二〇一八 展望（FLAG）/
