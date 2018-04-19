@@ -95,28 +95,18 @@
 
 
 
-<meta name="description" content="前言最近公司要做类似直播的功能，丢给了我一个rtmp地址。我…（） 视音频编解码技术简单概述视频文件有不同的格式，用不同的后缀表示：avi，rmvb，mp4，flv，mkv等等（当然也使用不同的图标）。在这里需要注意的是，这些格式代表的是“封装格式”。何为封装格式？就是把视频数据和音频数据打包成一个文件的规范。仅仅靠看文件的后缀，很难能看出具体使用了什么“视音频编码标准”。总的来说，不同的封装格式">
+<meta name="description" content="今儿上班没时间刷，不过好在项目进度有很大进展。下班回来继续补，争取每天至少刷一题。喔！！~~ 2018.4.19 leetCode的夜路Array - 217. Contains Duplicate题目详情 Given an array of integers, find if the array contains any duplicates. Your function should retu">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="视音频编解码技术简单概述">
-<meta property="og:url" content="http://akira.wang/视音频编解码技术简单概述/index.html">
+<meta property="og:title" content="2018.4.19 leetCode的夜路">
+<meta property="og:url" content="http://akira.wang/2018.4.19 leetCode的夜路/index.html">
 <meta property="og:site_name" content="Akira">
-<meta property="og:description" content="前言最近公司要做类似直播的功能，丢给了我一个rtmp地址。我…（） 视音频编解码技术简单概述视频文件有不同的格式，用不同的后缀表示：avi，rmvb，mp4，flv，mkv等等（当然也使用不同的图标）。在这里需要注意的是，这些格式代表的是“封装格式”。何为封装格式？就是把视频数据和音频数据打包成一个文件的规范。仅仅靠看文件的后缀，很难能看出具体使用了什么“视音频编码标准”。总的来说，不同的封装格式">
+<meta property="og:description" content="今儿上班没时间刷，不过好在项目进度有很大进展。下班回来继续补，争取每天至少刷一题。喔！！~~ 2018.4.19 leetCode的夜路Array - 217. Contains Duplicate题目详情 Given an array of integers, find if the array contains any duplicates. Your function should retu">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgsa.baidu.com/forum/w%3D580/sign=f11f287c0dd162d985ee621421dea950/0e78f70f4bfbfbed587350c77ff0f736aec31fb3.jpg">
-<meta property="og:image" content="http://img.blog.csdn.net/20140201115933359?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpeGlhb2h1YTEwMjA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20140201120523046?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpeGlhb2h1YTEwMjA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://akira.wang/视音频编解码技术简单概述/images/live/streamProtocol.png">
-<meta property="og:image" content="http://akira.wang/视音频编解码技术简单概述/images/live/packageFormat.png">
-<meta property="og:image" content="http://akira.wang/视音频编解码技术简单概述/images/live/videoCode.png">
-<meta property="og:image" content="http://akira.wang/视音频编解码技术简单概述/images/live/audioCode.png">
-<meta property="og:image" content="https://imgsa.baidu.com/forum/w%3D580/sign=af530e2520381f309e198da199004c67/ca865cb30f2442a7e84fc1b8d943ad4bd0130244.jpg">
-<meta property="og:image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2566083351,3335343839&fm=27&gp=0.jpg">
-<meta property="og:updated_time" content="2018-02-08T12:53:16.956Z">
+<meta property="og:updated_time" content="2018-04-19T15:17:58.829Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="视音频编解码技术简单概述">
-<meta name="twitter:description" content="前言最近公司要做类似直播的功能，丢给了我一个rtmp地址。我…（） 视音频编解码技术简单概述视频文件有不同的格式，用不同的后缀表示：avi，rmvb，mp4，flv，mkv等等（当然也使用不同的图标）。在这里需要注意的是，这些格式代表的是“封装格式”。何为封装格式？就是把视频数据和音频数据打包成一个文件的规范。仅仅靠看文件的后缀，很难能看出具体使用了什么“视音频编码标准”。总的来说，不同的封装格式">
-<meta name="twitter:image" content="https://imgsa.baidu.com/forum/w%3D580/sign=f11f287c0dd162d985ee621421dea950/0e78f70f4bfbfbed587350c77ff0f736aec31fb3.jpg">
+<meta name="twitter:title" content="2018.4.19 leetCode的夜路">
+<meta name="twitter:description" content="今儿上班没时间刷，不过好在项目进度有很大进展。下班回来继续补，争取每天至少刷一题。喔！！~~ 2018.4.19 leetCode的夜路Array - 217. Contains Duplicate题目详情 Given an array of integers, find if the array contains any duplicates. Your function should retu">
 
 
 
@@ -144,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://akira.wang/视音频编解码技术简单概述/"/>
+  <link rel="canonical" href="http://akira.wang/2018.4.19 leetCode的夜路/"/>
 
 
 
 
 
-  <title>视音频编解码技术简单概述 | Akira</title>
+  <title>2018.4.19 leetCode的夜路 | Akira</title>
   
 
 
@@ -292,7 +282,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://akira.wang/视音频编解码技术简单概述/">
+    <link itemprop="mainEntityOfPage" href="http://akira.wang/2018.4.19 leetCode的夜路/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Akira">
@@ -309,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">视音频编解码技术简单概述</h1>
+          <h1 class="post-title" itemprop="name headline">2018.4.19 leetCode的夜路</h1>
         
 
         <div class="post-meta">
@@ -321,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-08T20:50:14+08:00">
-                2018-02-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-19T23:09:40+08:00">
+                2018-04-19
               </time>
             
 
@@ -344,8 +334,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -377,7 +367,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  2,012
+                  536
                 </span>
               
 
@@ -393,7 +383,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  7
+                  3
                 </span>
               
             </div>
@@ -411,41 +401,36 @@
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近公司要做类似直播的功能，丢给了我一个rtmp地址。<br>我…（<img src="https://imgsa.baidu.com/forum/w%3D580/sign=f11f287c0dd162d985ee621421dea950/0e78f70f4bfbfbed587350c77ff0f736aec31fb3.jpg" alt="image">）</p>
-<h1 id="视音频编解码技术简单概述"><a href="#视音频编解码技术简单概述" class="headerlink" title="视音频编解码技术简单概述"></a>视音频编解码技术简单概述</h1><p>视频文件有不同的格式，用不同的后缀表示：avi，rmvb，mp4，flv，mkv等等（当然也使用不同的图标）。在这里需要注意的是，这些格式代表的是“封装格式”。何为封装格式？就是把视频数据和音频数据打包成一个文件的规范。仅仅靠看文件的后缀，很难能看出具体使用了什么“视音频编码标准”。总的来说，不同的封装格式之间差距不大，各有优劣。</p>
-<p><img src="http://img.blog.csdn.net/20140201115933359?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpeGlhb2h1YTEwMjA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
-<p>在弹出的“属性”对话框的“MediaInfo”选项卡中，就可以查看该视频文件采用的视音频技术了。如下图所示，“变形金刚预告片_h1080p.mov”采用MPEG4的QuickTime封装格式（MOV），采用了H.264（AVC）的压缩编码标准。</p>
-<h1 id="视频播放器原理"><a href="#视频播放器原理" class="headerlink" title="视频播放器原理"></a>视频播放器原理</h1><p>视音频技术主要包含以下几点：封装技术，视频压缩编码技术以及音频压缩编码技术。如果考虑到网络传输的话，还包括流媒体协议技术。</p>
-<p>在这里不细说了，仅简要说明一下视频播放器的原理。</p>
-<p>视频播放器播放一个互联网上的视频文件，需要经过以下几个步骤：解协议，解封装，解码视音频，视音频同步。如果播放本地文件则不需要解协议，为以下几个步骤：解封装，解码视音频，视音频同步。他们的过程如图所示。</p>
-<p><img src="http://img.blog.csdn.net/20140201120523046?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpeGlhb2h1YTEwMjA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
-<p>解协议的作用，就是将流媒体协议的数据，解析为标准的相应的封装格式数据。视音频在网络上传播的时候，常常采用各种流媒体协议，例如HTTP，RTMP，或是MMS等等。这些协议在传输视音频数据的同时，也会传输一些信令数据。这些信令数据包括对播放的控制（播放，暂停，停止），或者对网络状态的描述等。解协议的过程中会去除掉信令数据而只保留视音频数据。例如，采用RTMP协议传输的数据，经过解协议操作后，输出FLV格式的数据。</p>
-<p>解封装的作用，就是将输入的封装格式的数据，分离成为音频流压缩编码数据和视频流压缩编码数据。封装格式种类很多，例如MP4，MKV，RMVB，TS，FLV，AVI等等，它的作用就是将已经压缩编码的视频数据和音频数据按照一定的格式放到一起。例如，FLV格式的数据，经过解封装操作后，输出H.264编码的视频码流和AAC编码的音频码流。</p>
-<p>解码的作用，就是将视频/音频压缩编码数据，解码成为非压缩的视频/音频原始数据。音频的压缩编码标准包含AAC，MP3，AC-3等等，视频的压缩编码标准则包含H.264，MPEG2，VC-1等等。解码是整个系统中最重要也是最复杂的一个环节。通过解码，压缩编码的视频数据输出成为非压缩的颜色数据，例如YUV420P，RGB等等；压缩编码的音频数据输出成为非压缩的音频抽样数据，例如PCM数据。</p>
-<p>视音频同步的作用，就是根据解封装模块处理过程中获取到的参数信息，同步解码出来的视频和音频数据，并将视频音频数据送至系统的显卡和声卡播放出来。</p>
-<h1 id="流媒体协议"><a href="#流媒体协议" class="headerlink" title="流媒体协议"></a>流媒体协议</h1><p>流媒体协议是服务器与客户端之间通信遵循的规定。当前网络上主要的流媒体协议如表所示。</p>
-<p><img src="images/live/streamProtocol.png" alt="image"></p>
-<p>RTSP+RTP经常用于IPTV领域。因为其采用UDP传输视音频，支持组播，效率较高。但其缺点是网络不好的情况下可能会丢包，影响视频观看质量。因而围绕IPTV的视频质量的研究还是挺多的。</p>
-<p>因为互联网网络环境的不稳定性，RTSP+RTP较少用于互联网视音频传输。互联网视频服务通常采用TCP作为其流媒体的传输层协议，因而像RTMP，MMS，HTTP这类的协议广泛用于互联网视音频服务之中。这类协议不会发生丢包，因而保证了视频的质量，但是传输的效率会相对低一些。</p>
-<p>此外RTMFP是一种比较新的流媒体协议，特点是支持P2P。</p>
-<h1 id="封装格式"><a href="#封装格式" class="headerlink" title="封装格式"></a>封装格式</h1><p>封装格式的主要作用是把视频码流和音频码流按照一定的格式存储在一个文件中。现如今流行的封装格式如下表所示：</p>
-<p><img src="images/live/packageFormat.png" alt="image"></p>
-<p>由表可见，除了AVI之外，其他封装格式都支持流媒体，即可以“边下边播”。有些格式更“万能”一些，支持的视音频编码标准多一些，比如MKV。而有些格式则支持的相对比较少，比如说RMVB。</p>
-<h1 id="视频编码"><a href="#视频编码" class="headerlink" title="视频编码"></a>视频编码</h1><p>视频编码的主要作用是将视频像素数据（RGB，YUV等）压缩成为视频码流，从而降低视频的数据量。如果视频不经过压缩编码的话，体积通常是非常大的，一部电影可能就要上百G的空间。视频编码是视音频技术中最重要的技术之一。视频码流的数据量占了视音频总数据量的绝大部分。高效率的视频编码在同等的码率下，可以获得更高的视频质量。</p>
-<p><img src="images/live/videoCode.png" alt="image"></p>
-<p>由表可见，有两种视频编码方案是最新推出的：VP9和HEVC。目前这两种方案都处于研发阶段，还没有到达实用的程度。当前使用最多的视频编码方案就是H.264。</p>
-<h1 id="音频编码"><a href="#音频编码" class="headerlink" title="音频编码"></a>音频编码</h1><p>音频编码的主要作用是将音频采样数据（PCM等）压缩成为音频码流，从而降低音频的数据量。音频编码也是互联网视音频技术中一个重要的技术。但是一般情况下音频的数据量要远小于视频的数据量，因而即使使用稍微落后的音频编码标准，而导致音频数据量有所增加，也不会对视音频的总数据量产生太大的影响。高效率的音频编码在同等的码率下，可以获得更高的音质。</p>
-<p><img src="images/live/audioCode.png" alt="image"></p>
-<p>由表可见，近年来并未推出全新的音频编码方案，可见音频编码技术已经基本可以满足人们的需要。音频编码技术近期绝大部分的改动都是在MP3的继任者——AAC的基础上完成的。</p>
-<h1 id="目前主流常见直播协议"><a href="#目前主流常见直播协议" class="headerlink" title="目前主流常见直播协议"></a>目前主流常见直播协议</h1><p>RTMP: 底层基于TCP，在浏览器端依赖Flash。<br>HTTP-FLV: 基于HTTP流式IO传输FLV，依赖浏览器支持播放FLV。<br>WebSocket-FLV: 基于WebSocket传输FLV，依赖浏览器支持播放FLV。WebSocket建立在HTTP之上，建立WebSocket连接前还要先建立HTTP连接。<br>HLS: Http Live Streaming，苹果提出基于HTTP的流媒体传输协议。HTML5可以直接打开播放。<br>RTP: 基于UDP，延迟1秒，浏览器不支持。</p>
-<p>在支持浏览器的协议里，延迟排序是：<br>RTMP = HTTP-FLV = WebSocket-FLV &lt; HLS<br>而性能排序恰好相反：<br>RTMP &gt; HTTP-FLV = WebSocket-FLV &gt; HLS<br>也就是说延迟小的性能不好。</p>
-<p>可以看出在浏览器里做直播，使用HTTP-FLV协议是不错的，性能优于RTMP+Flash，延迟可以做到和RTMP+Flash一样甚至更好。</p>
-<p>#最后 </p>
-<p><img src="https://imgsa.baidu.com/forum/w%3D580/sign=af530e2520381f309e198da199004c67/ca865cb30f2442a7e84fc1b8d943ad4bd0130244.jpg" alt="image"></p>
-<p>既然是rtmp，我最后直接用ckplayer，把官方demo替换下url。完事儿</p>
-<p>不过依赖flash…，就有点尴尬了。</p>
-<p>目前想法是看能不能用Node做流媒体服务器做H5直播，让我再研究一番。</p>
-<p><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2566083351,3335343839&amp;fm=27&amp;gp=0.jpg" alt="image"></p>
+        <p>今儿上班没时间刷，不过好在项目进度有很大进展。下班回来继续补，争取每天至少刷一题。喔！！~~</p>
+<h1 id="2018-4-19-leetCode的夜路"><a href="#2018-4-19-leetCode的夜路" class="headerlink" title="2018.4.19 leetCode的夜路"></a>2018.4.19 leetCode的夜路</h1><h2 id="Array-217-Contains-Duplicate"><a href="#Array-217-Contains-Duplicate" class="headerlink" title="Array - 217. Contains Duplicate"></a>Array - 217. Contains Duplicate</h2><h3 id="题目详情"><a href="#题目详情" class="headerlink" title="题目详情"></a>题目详情</h3><blockquote>
+<p>Given an array of integers, find if the array contains any duplicates. Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.</p>
+<p>就是给一个数组，如果数组内有重复元素就返回true，否则返回false。</p>
+</blockquote>
+<p>Example:</p>
+<p>Input: matrix = [0, 1, 0, 3, 12]</p>
+<p>Output: true</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>太简单了，跟数组去重一样</li>
+</ul>
+<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number[]&#125; nums</div><div class="line"> * @return &#123;boolean&#125;</div><div class="line"> */</div><div class="line">var containsDuplicate = function(nums) &#123;</div><div class="line">    let obj = &#123;&#125;</div><div class="line">    for(let i = 0, len = nums.length; i &lt; len; i++) &#123;</div><div class="line">        if(obj[nums[i]])&#123;</div><div class="line">            return true</div><div class="line">        &#125; else &#123;</div><div class="line">            obj[nums[i]] = 1</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return false</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="Array-661-Image-Smootheroes"><a href="#Array-661-Image-Smootheroes" class="headerlink" title="Array - 661. Image Smootheroes"></a>Array - 661. Image Smootheroes</h2><h3 id="题目详情-1"><a href="#题目详情-1" class="headerlink" title="题目详情"></a>题目详情</h3><blockquote>
+<p>Given a 2D integer matrix M representing the gray scale of an image, you need to design a smoother to make the gray scale of each cell becomes the average gray scale (rounding down) of all the 8 surrounding cells and itself. If a cell has less than 8 surrounding cells, then use as many as you can.</p>
+<p>题目给了我们一个2d M array，让我们平滑处理图片。对于每一个cell，把它更新为 以自身为中心 3x3 的平均值。</p>
+<p>　　就用常规方法做，新设一个 长度跟传入数组一样大小的arr，遍历M，对于每一个cell， 遍历以它为中心的3x3的cells，得到平均值，存入arr。</p>
+<p>　　需要注意的就是，3x3的边界问题。</p>
+</blockquote>
+<p>Example:</p>
+<p>Input:<br>[[1,1,1],<br> [1,0,1],<br> [1,1,1]]</p>
+<p>Output:<br>[[0, 0, 0],<br> [0, 0, 0],<br> [0, 0, 0]]</p>
+<p>Explanation:</p>
+<blockquote>
+<p>For the point (0,0), (0,2), (2,0), (2,2): floor(3/4) = floor(0.75) = 0<br>For the point (0,1), (1,0), (1,2), (2,1): floor(5/6) = floor(0.83333333) = 0<br>For the point (1,1): floor(8/9) = floor(0.88888889) = 0</p>
+</blockquote>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>每个cell遍历周围方块</li>
+</ul>
+<h3 id="具体代码-1"><a href="#具体代码-1" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number[][]&#125; M</div><div class="line"> * @return &#123;number[][]&#125;</div><div class="line"> */</div><div class="line">var imageSmoother = function(M) &#123;</div><div class="line">    let arr = Array.from(Array(M.length)).map(() =&gt; Array(M[0].length).fill(0))</div><div class="line">    let val = 0</div><div class="line">    let count = 0</div><div class="line">    </div><div class="line">    for(let i = 0, y = M.length; i &lt; y; i++) &#123;</div><div class="line">        for(let j = 0, x = M[0].length; j &lt; x; j++) &#123;</div><div class="line">            </div><div class="line">            for(let a = -1; a &lt; 2; a++) &#123;</div><div class="line">                for(let b = -1; b &lt; 2; b++) &#123;</div><div class="line">                    if(j + b &gt;= 0 &amp;&amp; i + a &gt;= 0 &amp;&amp; i + a &lt; M.length &amp;&amp; j + b &lt;  M[0].length ) &#123;</div><div class="line">                        val += M[i + a][j + b];</div><div class="line">                        count++</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            arr[i][j] = Math.floor(val/count)</div><div class="line">            val = 0</div><div class="line">            count = 0</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return arr</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -498,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/区区一个死宅/" rel="next" title="区区一个死宅">
-                <i class="fa fa-chevron-left"></i> 区区一个死宅
+              <a href="/2018.4.18 刷题刷题/" rel="next" title="2018.4.18 继续刷几题">
+                <i class="fa fa-chevron-left"></i> 2018.4.18 继续刷几题
               </a>
             
           </div>
@@ -507,10 +492,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/Re0：从零开始的JavaScript - 观察者模式的理解/" rel="prev" title="Re0：从零开始的JavaScript - 观察者模式的理解">
-                Re0：从零开始的JavaScript - 观察者模式的理解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -676,7 +657,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视音频编解码技术简单概述"><span class="nav-number">2.</span> <span class="nav-text">视音频编解码技术简单概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视频播放器原理"><span class="nav-number">3.</span> <span class="nav-text">视频播放器原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流媒体协议"><span class="nav-number">4.</span> <span class="nav-text">流媒体协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#封装格式"><span class="nav-number">5.</span> <span class="nav-text">封装格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视频编码"><span class="nav-number">6.</span> <span class="nav-text">视频编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#音频编码"><span class="nav-number">7.</span> <span class="nav-text">音频编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目前主流常见直播协议"><span class="nav-number">8.</span> <span class="nav-text">目前主流常见直播协议</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2018-4-19-leetCode的夜路"><span class="nav-number">1.</span> <span class="nav-text">2018.4.19 leetCode的夜路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-217-Contains-Duplicate"><span class="nav-number">1.1.</span> <span class="nav-text">Array - 217. Contains Duplicate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目详情"><span class="nav-number">1.1.1.</span> <span class="nav-text">题目详情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.1.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码"><span class="nav-number">1.1.3.</span> <span class="nav-text">具体代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-661-Image-Smootheroes"><span class="nav-number">1.2.</span> <span class="nav-text">Array - 661. Image Smootheroes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目详情-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">题目详情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">具体代码</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
