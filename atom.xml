@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://akira.wang/"/>
-  <updated>2018-04-23T16:35:39.910Z</updated>
+  <updated>2018-04-24T11:53:02.375Z</updated>
   <id>http://akira.wang/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2018.4.24 还是DP....</title>
+    <link href="http://akira.wang/2018.4.24%20%E8%BF%98%E6%98%AFDP..../"/>
+    <id>http://akira.wang/2018.4.24 还是DP..../</id>
+    <published>2018-04-24T11:52:34.250Z</published>
+    <updated>2018-04-24T11:53:02.375Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天3题，就最后一题涉及贪心，DP的看了一下disscuss</p><h2 id="Array-219-Contains-Duplicate-II"><a href="#Array-219-Contains-Duplicate-II" class="headerlink" title="Array - 219. Contains Duplicate II"></a>Array - 219. Contains Duplicate II</h2><h3 id="题目详情"><a href="#题目详情" class="headerlink" title="题目详情"></a>题目详情</h3><blockquote><p>Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k.</p><p>查找有没相同的值，但是索引(i j不同)不同，且他们的索引距离小于k，有返回true</p></blockquote><p>Example:</p><p>Input: matrix = [0, 1, 0, 1, 12], k = 3</p><p>Output: true</p><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul><li>跟数组去重一样，利用键值对，值存储索引值，键值存储值</li></ul><h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number[]&#125; nums</div><div class="line"> * @param &#123;number&#125; k</div><div class="line"> * @return &#123;boolean&#125;</div><div class="line"> */</div><div class="line">var containsNearbyDuplicate = function(nums, k) &#123;</div><div class="line">    let obj = &#123;&#125;</div><div class="line">    for(let i = 0, len = nums.length; i &lt; len; i++) &#123;</div><div class="line">        if(obj[nums[i]] !== undefined) &#123;</div><div class="line">            if(Math.abs(obj[nums[i]] - i) &lt;= k) &#123;</div><div class="line">                return true</div><div class="line">            &#125;</div><div class="line">            obj[nums[i]] = i</div><div class="line">        &#125; else &#123;</div><div class="line">            obj[nums[i]] = i</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return false</div><div class="line">&#125;;</div></pre></td></tr></table></figure><hr><h2 id="Array-643-Maximum-Average-Subarray-I"><a href="#Array-643-Maximum-Average-Subarray-I" class="headerlink" title="Array - 643. Maximum Average Subarray I"></a>Array - 643. Maximum Average Subarray I</h2><h3 id="题目详情-1"><a href="#题目详情-1" class="headerlink" title="题目详情"></a>题目详情</h3><blockquote><p>Given an array consisting of n integers, find the contiguous subarray of given length k that has the maximum average value. And you need to output the maximum average value.</p><p>在数组中找到长度为k的最大值除以k的值。其实就是找到长度为&gt;k的最大值</p></blockquote><p>Example:</p><p>Input: [1,12,-5,-6,50,3], k = 4</p><p>Output: 12.75</p><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><ul><li>先求前 k - 1长度数组的和</li><li>然后遍历数组，从k-1开始加，之后就加一个尾减个头，这样保证长度不变。</li></ul><h3 id="具体代码-1"><a href="#具体代码-1" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number[]&#125; nums</div><div class="line"> * @param &#123;number&#125; k</div><div class="line"> * @return &#123;number&#125;</div><div class="line"> */</div><div class="line">var findMaxAverage = function(nums, k) &#123;</div><div class="line">    if(nums.length === 1) return nums[0]</div><div class="line">    </div><div class="line">    let currSum = 0</div><div class="line">    for(let i = 0; i &lt; k - 1; i++) &#123;</div><div class="line">        currSum += nums[i]</div><div class="line">    &#125;</div><div class="line">    if(nums.length === k) return (currSum + nums[k - 1]) / k</div><div class="line">    </div><div class="line">    let maxSum = -Infinity</div><div class="line">    for(let i = k - 1, len = nums.length; i &lt; len; i++) &#123;</div><div class="line">        currSum += nums[i]</div><div class="line">        if(i - k &gt; -1) &#123;</div><div class="line">            currSum -= nums[i - k]</div><div class="line">        &#125;</div><div class="line">        maxSum = Math.max(currSum, maxSum)</div><div class="line">    &#125;</div><div class="line">    return maxSum / 1.0 / k</div><div class="line">&#125;;</div></pre></td></tr></table></figure><hr><h2 id="Array-605-Can-Place-Flowers"><a href="#Array-605-Can-Place-Flowers" class="headerlink" title="Array - 605. Can Place Flowers"></a>Array - 605. Can Place Flowers</h2><h3 id="题目详情-2"><a href="#题目详情-2" class="headerlink" title="题目详情"></a>题目详情</h3><blockquote><p>Suppose you have a long flowerbed in which some of the plots are planted and some are not. However, flowers cannot be planted in adjacent plots - they would compete for water and both would die.</p><p>Given a flowerbed (represented as an array containing 0 and 1, where 0 means empty and 1 means not empty), and a number n, return if n new flowers can be planted in it without violating the no-adjacent-flowers rule.</p><p>这道题给了我们一个01数组，其中1表示已经放了花，0表示可以放花的位置，但是有个限制条件是不能有相邻的花。</p></blockquote><p>Example:</p><p>Input: flowerbed = [1,0,0,0,1], n = 1</p><p>Output: True</p><h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><ul><li>遍历数组，在为0的元素，判断该元素前后是否为0</li><li>如果是，判断该位置前后是不是有花</li><li>没有花就在该位置种花，种花次数和n相等</li></ul><h3 id="具体代码-2"><a href="#具体代码-2" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number[]&#125; flowerbed</div><div class="line"> * @param &#123;number&#125; n</div><div class="line"> * @return &#123;boolean&#125;</div><div class="line"> */</div><div class="line">var canPlaceFlowers = function(arr, n) &#123;</div><div class="line">    let count = 0</div><div class="line">    for(let i = 0, len = arr.length; i &lt; len &amp;&amp; count &lt; n; i++) &#123;</div><div class="line">        if(arr[i] === 0) &#123;</div><div class="line">            let prev = i === 0 ? 0 : arr[i - 1]</div><div class="line">            let next = i === len - 1 ? 0 : arr[i + 1]</div><div class="line">            if(prev === 0 &amp;&amp; next === 0) &#123;</div><div class="line">                arr[i] = 1</div><div class="line">                count ++</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    console.log(count)</div><div class="line">    return count === n</div><div class="line">&#125;;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天3题，就最后一题涉及贪心，DP的看了一下disscuss&lt;/p&gt;
+&lt;h2 id=&quot;Array-219-Contains-Duplicate-II&quot;&gt;&lt;a href=&quot;#Array-219-Contains-Duplicate-II&quot; class=&quot;headerlink&quot;
+      
+    
+    </summary>
+    
+      <category term="算法" scheme="http://akira.wang/categories/algorithm/"/>
+    
+    
+      <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title>2018.4.20 leetcode DP看的头大...</title>
@@ -501,33 +527,6 @@
     
     
       <category term="JavaScript" scheme="http://akira.wang/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>这是我的第一篇文章</title>
-    <link href="http://akira.wang/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%96%87%E7%AB%A0/"/>
-    <id>http://akira.wang/我的第一个文章/</id>
-    <published>2017-07-25T03:00:58.446Z</published>
-    <updated>2017-09-30T05:33:57.289Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h1><ul><li>[x]  <strong>npm i hexo –save</strong></li><li>点击<a href="http://note.youdao.com/" target="_blank" rel="noopener">这里</a>访问我的博客</li><li><img src="http://note.youdao.com/favicon.ico" alt="ddd"></li><li>谢谢</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;安装hexo&quot;&gt;&lt;a href=&quot;#安装hexo&quot; class=&quot;headerlink&quot; title=&quot;安装hexo&quot;&gt;&lt;/a&gt;安装hexo&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;[x]  &lt;strong&gt;npm i hexo –save&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;
-      
-    
-    </summary>
-    
-      <category term="前端" scheme="http://akira.wang/categories/web/"/>
-    
-    
-      <category term="js" scheme="http://akira.wang/tags/js/"/>
     
   </entry>
   

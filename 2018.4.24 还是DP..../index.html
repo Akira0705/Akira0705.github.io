@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="addEventListener 中 事件用bind指向this 后，无法移除事件问题今天写BUG的时候，要在一个touchstart事件内添加 touchmove和touchend的事件注册。 然后，在touchend的时候再把2个事件给移除了。 之前一直不是很在意bind，apply，call一些细节的的我就在这里吃了亏，果然出来混的迟早要还的。 代码如下： 123456789101112do">
+<meta name="description" content="今天3题，就最后一题涉及贪心，DP的看了一下disscuss Array - 219. Contains Duplicate II题目详情 Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="addEventListener中事件用bind指向this后,无法移除事件问题.">
-<meta property="og:url" content="http://akira.wang/addEventListener 中 事件用bind指向this 后，无法移除事件问题/index.html">
+<meta property="og:title" content="2018.4.24 还是DP....">
+<meta property="og:url" content="http://akira.wang/2018.4.24 还是DP..../index.html">
 <meta property="og:site_name" content="Akira">
-<meta property="og:description" content="addEventListener 中 事件用bind指向this 后，无法移除事件问题今天写BUG的时候，要在一个touchstart事件内添加 touchmove和touchend的事件注册。 然后，在touchend的时候再把2个事件给移除了。 之前一直不是很在意bind，apply，call一些细节的的我就在这里吃了亏，果然出来混的迟早要还的。 代码如下： 123456789101112do">
+<meta property="og:description" content="今天3题，就最后一题涉及贪心，DP的看了一下disscuss Array - 219. Contains Duplicate II题目详情 Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-17T10:13:06.117Z">
+<meta property="og:updated_time" content="2018-04-24T11:53:02.375Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="addEventListener中事件用bind指向this后,无法移除事件问题.">
-<meta name="twitter:description" content="addEventListener 中 事件用bind指向this 后，无法移除事件问题今天写BUG的时候，要在一个touchstart事件内添加 touchmove和touchend的事件注册。 然后，在touchend的时候再把2个事件给移除了。 之前一直不是很在意bind，apply，call一些细节的的我就在这里吃了亏，果然出来混的迟早要还的。 代码如下： 123456789101112do">
+<meta name="twitter:title" content="2018.4.24 还是DP....">
+<meta name="twitter:description" content="今天3题，就最后一题涉及贪心，DP的看了一下disscuss Array - 219. Contains Duplicate II题目详情 Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://akira.wang/addEventListener 中 事件用bind指向this 后，无法移除事件问题/"/>
+  <link rel="canonical" href="http://akira.wang/2018.4.24 还是DP..../"/>
 
 
 
 
 
-  <title>addEventListener中事件用bind指向this后,无法移除事件问题. | Akira</title>
+  <title>2018.4.24 还是DP.... | Akira</title>
   
 
 
@@ -282,7 +282,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://akira.wang/addEventListener 中 事件用bind指向this 后，无法移除事件问题/">
+    <link itemprop="mainEntityOfPage" href="http://akira.wang/2018.4.24 还是DP..../">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Akira">
@@ -299,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">addEventListener中事件用bind指向this后,无法移除事件问题.</h1>
+          <h1 class="post-title" itemprop="name headline">2018.4.24 还是DP....</h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-17T18:14:28+08:00">
-                2017-10-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T19:52:34+08:00">
+                2018-04-24
               </time>
             
 
@@ -334,8 +334,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -367,7 +367,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  328
+                  677
                 </span>
               
 
@@ -383,7 +383,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -401,18 +401,46 @@
       
 
       
-        <h1 id="addEventListener-中-事件用bind指向this-后，无法移除事件问题"><a href="#addEventListener-中-事件用bind指向this-后，无法移除事件问题" class="headerlink" title="addEventListener 中 事件用bind指向this 后，无法移除事件问题"></a>addEventListener 中 事件用bind指向this 后，无法移除事件问题</h1><p>今天写BUG的时候，要在一个touchstart事件内添加 touchmove和touchend的事件注册。</p>
-<p>然后，在touchend的时候再把2个事件给移除了。</p>
-<p>之前一直不是很在意bind，apply，call一些细节的的我就在这里吃了亏，果然出来混的迟早要还的。</p>
-<p>代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">dom.addEventListener(&apos;touchstart&apos;, fTouchstart.bind(this));</div><div class="line">function fTouchstart(e) &#123;</div><div class="line">    console.log(&apos;start:&apos; + e, this); // TouchEvent对象，实例对象</div><div class="line">    dom.addEventListener(&apos;touchmove&apos;, fTouchmove.bind(this));</div><div class="line">    dom.addEventListener(&apos;touchend&apos;, fTouchend.bind(this));</div><div class="line">&#125;</div><div class="line"></div><div class="line">function fTouchmove(e) &#123;</div><div class="line">    console.log(‘move:’ + e, this); // TouchEvent对象，实例对象</div><div class="line">    dom.removeEventListener(&apos;touchmove&apos;, fTouchmove);</div><div class="line">    dom.removeEventListener(&apos;touchend&apos;, fTouchend);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然后在浏览器上换成移动端在dom上点击几次，你会发现end事件执行次数之后每次会递增1。</p>
+        <p>今天3题，就最后一题涉及贪心，DP的看了一下disscuss</p>
+<h2 id="Array-219-Contains-Duplicate-II"><a href="#Array-219-Contains-Duplicate-II" class="headerlink" title="Array - 219. Contains Duplicate II"></a>Array - 219. Contains Duplicate II</h2><h3 id="题目详情"><a href="#题目详情" class="headerlink" title="题目详情"></a>题目详情</h3><blockquote>
+<p>Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k.</p>
+<p>查找有没相同的值，但是索引(i j不同)不同，且他们的索引距离小于k，有返回true</p>
+</blockquote>
+<p>Example:</p>
+<p>Input: matrix = [0, 1, 0, 1, 12], k = 3</p>
+<p>Output: true</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>跟数组去重一样，利用键值对，值存储索引值，键值存储值</li>
+</ul>
+<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number[]&#125; nums</div><div class="line"> * @param &#123;number&#125; k</div><div class="line"> * @return &#123;boolean&#125;</div><div class="line"> */</div><div class="line">var containsNearbyDuplicate = function(nums, k) &#123;</div><div class="line">    let obj = &#123;&#125;</div><div class="line">    for(let i = 0, len = nums.length; i &lt; len; i++) &#123;</div><div class="line">        if(obj[nums[i]] !== undefined) &#123;</div><div class="line">            if(Math.abs(obj[nums[i]] - i) &lt;= k) &#123;</div><div class="line">                return true</div><div class="line">            &#125;</div><div class="line">            obj[nums[i]] = i</div><div class="line">        &#125; else &#123;</div><div class="line">            obj[nums[i]] = i</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return false</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <hr>
-<h2 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h2><p>bind方法返回了一个新的函数。在removeEventListener中移除的事件并没有绑定在TouchEvnent上，绑定上去的是bind()方法每次返回的函数。</p>
+<h2 id="Array-643-Maximum-Average-Subarray-I"><a href="#Array-643-Maximum-Average-Subarray-I" class="headerlink" title="Array - 643. Maximum Average Subarray I"></a>Array - 643. Maximum Average Subarray I</h2><h3 id="题目详情-1"><a href="#题目详情-1" class="headerlink" title="题目详情"></a>题目详情</h3><blockquote>
+<p>Given an array consisting of n integers, find the contiguous subarray of given length k that has the maximum average value. And you need to output the maximum average value.</p>
+<p>在数组中找到长度为k的最大值除以k的值。其实就是找到长度为&gt;k的最大值</p>
+</blockquote>
+<p>Example:</p>
+<p>Input: [1,12,-5,-6,50,3], k = 4</p>
+<p>Output: 12.75</p>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>先求前 k - 1长度数组的和</li>
+<li>然后遍历数组，从k-1开始加，之后就加一个尾减个头，这样保证长度不变。</li>
+</ul>
+<h3 id="具体代码-1"><a href="#具体代码-1" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number[]&#125; nums</div><div class="line"> * @param &#123;number&#125; k</div><div class="line"> * @return &#123;number&#125;</div><div class="line"> */</div><div class="line">var findMaxAverage = function(nums, k) &#123;</div><div class="line">    if(nums.length === 1) return nums[0]</div><div class="line">    </div><div class="line">    let currSum = 0</div><div class="line">    for(let i = 0; i &lt; k - 1; i++) &#123;</div><div class="line">        currSum += nums[i]</div><div class="line">    &#125;</div><div class="line">    if(nums.length === k) return (currSum + nums[k - 1]) / k</div><div class="line">    </div><div class="line">    let maxSum = -Infinity</div><div class="line">    for(let i = k - 1, len = nums.length; i &lt; len; i++) &#123;</div><div class="line">        currSum += nums[i]</div><div class="line">        if(i - k &gt; -1) &#123;</div><div class="line">            currSum -= nums[i - k]</div><div class="line">        &#125;</div><div class="line">        maxSum = Math.max(currSum, maxSum)</div><div class="line">    &#125;</div><div class="line">    return maxSum / 1.0 / k</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <hr>
-<h2 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h2><p>在外面保存bind()返回函数的引用。</p>
-<p>修改上面代码:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">// 保存引用</div><div class="line">var fTouchstart_ = fTouchstart.bind(this),</div><div class="line">    fTouchmove_ = fTouchmove.bind(this),</div><div class="line">	fTouchend_ = fTouchend.bind(this);</div><div class="line"></div><div class="line">dom.addEventListener(&apos;touchstart&apos;, fTouchstart_);</div><div class="line">function fTouchstart(e) &#123;</div><div class="line">    console.log(&apos;start:&apos; + e, this); // TouchEvent对象，实例对象</div><div class="line">    dom.addEventListener(&apos;touchmove&apos;, fTouchmove_);</div><div class="line">    dom.addEventListener(&apos;touchend&apos;, fTouchend_);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function fTouchmove(e) &#123;</div><div class="line">    console.log(‘move:’ + e, this); // TouchEvent对象，实例对象</div><div class="line">    dom.removeEventListener(&apos;touchmove&apos;, fTouchmove_);</div><div class="line">    dom.removeEventListener(&apos;touchend&apos;, fTouchend_);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Array-605-Can-Place-Flowers"><a href="#Array-605-Can-Place-Flowers" class="headerlink" title="Array - 605. Can Place Flowers"></a>Array - 605. Can Place Flowers</h2><h3 id="题目详情-2"><a href="#题目详情-2" class="headerlink" title="题目详情"></a>题目详情</h3><blockquote>
+<p>Suppose you have a long flowerbed in which some of the plots are planted and some are not. However, flowers cannot be planted in adjacent plots - they would compete for water and both would die.</p>
+<p>Given a flowerbed (represented as an array containing 0 and 1, where 0 means empty and 1 means not empty), and a number n, return if n new flowers can be planted in it without violating the no-adjacent-flowers rule.</p>
+<p>这道题给了我们一个01数组，其中1表示已经放了花，0表示可以放花的位置，但是有个限制条件是不能有相邻的花。</p>
+</blockquote>
+<p>Example:</p>
+<p>Input: flowerbed = [1,0,0,0,1], n = 1</p>
+<p>Output: True</p>
+<h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>遍历数组，在为0的元素，判断该元素前后是否为0</li>
+<li>如果是，判断该位置前后是不是有花</li>
+<li>没有花就在该位置种花，种花次数和n相等</li>
+</ul>
+<h3 id="具体代码-2"><a href="#具体代码-2" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param &#123;number[]&#125; flowerbed</div><div class="line"> * @param &#123;number&#125; n</div><div class="line"> * @return &#123;boolean&#125;</div><div class="line"> */</div><div class="line">var canPlaceFlowers = function(arr, n) &#123;</div><div class="line">    let count = 0</div><div class="line">    for(let i = 0, len = arr.length; i &lt; len &amp;&amp; count &lt; n; i++) &#123;</div><div class="line">        if(arr[i] === 0) &#123;</div><div class="line">            let prev = i === 0 ? 0 : arr[i - 1]</div><div class="line">            let next = i === len - 1 ? 0 : arr[i + 1]</div><div class="line">            if(prev === 0 &amp;&amp; next === 0) &#123;</div><div class="line">                arr[i] = 1</div><div class="line">                count ++</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    console.log(count)</div><div class="line">    return count === n</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -465,8 +493,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/JavaScript — 搜索算法/" rel="next" title="JavaScript — 搜索算法">
-                <i class="fa fa-chevron-left"></i> JavaScript — 搜索算法
+              <a href="/2018.4.20 leetcode DP看的头大.../" rel="next" title="2018.4.20 leetcode DP看的头大...">
+                <i class="fa fa-chevron-left"></i> 2018.4.20 leetcode DP看的头大...
               </a>
             
           </div>
@@ -474,10 +502,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/JavaScript — 动态规划&&贪心算法/" rel="prev" title="JavaScript — 动态规划&&贪心算法">
-                JavaScript — 动态规划&&贪心算法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -643,7 +667,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#addEventListener-中-事件用bind指向this-后，无法移除事件问题"><span class="nav-number">1.</span> <span class="nav-text">addEventListener 中 事件用bind指向this 后，无法移除事件问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原因："><span class="nav-number">1.1.</span> <span class="nav-text">原因：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法："><span class="nav-number">1.2.</span> <span class="nav-text">解决方法：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-219-Contains-Duplicate-II"><span class="nav-number">1.</span> <span class="nav-text">Array - 219. Contains Duplicate II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目详情"><span class="nav-number">1.1.</span> <span class="nav-text">题目详情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码"><span class="nav-number">1.3.</span> <span class="nav-text">具体代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-643-Maximum-Average-Subarray-I"><span class="nav-number">2.</span> <span class="nav-text">Array - 643. Maximum Average Subarray I</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目详情-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目详情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路-1"><span class="nav-number">2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码-1"><span class="nav-number">2.3.</span> <span class="nav-text">具体代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-605-Can-Place-Flowers"><span class="nav-number">3.</span> <span class="nav-text">Array - 605. Can Place Flowers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目详情-2"><span class="nav-number">3.1.</span> <span class="nav-text">题目详情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路-2"><span class="nav-number">3.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码-2"><span class="nav-number">3.3.</span> <span class="nav-text">具体代码</span></a></li></ol></li></ol></div>
             
 
           </div>
