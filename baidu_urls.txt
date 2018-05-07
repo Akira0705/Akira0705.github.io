@@ -1,3 +1,7 @@
+http://akira.wang/2018.5.7 因为害怕自己并非明珠而不敢刻苦琢磨，又因为有几分相信自己是明珠，而不能与瓦砾碌碌为伍/
+http://akira.wang/2018.5.2 五一假期归来，算法不能停/
+http://akira.wang/2018.4.26 题是做了，每天要更新博客还是有点略麻烦/
+http://akira.wang/2018.4.25 leetcode中文/
 http://akira.wang/2018.4.24 还是DP..../
 http://akira.wang/2018.4.20 leetcode DP看的头大.../
 http://akira.wang/2018.4.23 leetcode 即便是慵懒的星期一，也不能落下/
