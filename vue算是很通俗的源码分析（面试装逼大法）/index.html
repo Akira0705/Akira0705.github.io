@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Akira" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1.请你说下数据绑定（数据绑定原理）：  首先通过一次渲染操作触发Data的getter（这里保证只有视图中需要被用到的data才会触发getter）进行依赖收集，这时候其实Watcher与data可以看成一种被绑定的状态（实际上是data的闭包中有一个Deps订阅者，在修改的时候会通知所有的Watcher观察者），在data发生变化的时候会触发它的setter，setter通知Watcher，W">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="看了再也不怕面试官问vue（面试装逼大法）">
+<meta property="og:url" content="http://akira.wang/vue算是很通俗的源码分析（面试装逼大法）/index.html">
+<meta property="og:site_name" content="Akira">
+<meta property="og:description" content="1.请你说下数据绑定（数据绑定原理）：  首先通过一次渲染操作触发Data的getter（这里保证只有视图中需要被用到的data才会触发getter）进行依赖收集，这时候其实Watcher与data可以看成一种被绑定的状态（实际上是data的闭包中有一个Deps订阅者，在修改的时候会通知所有的Watcher观察者），在data发生变化的时候会触发它的setter，setter通知Watcher，W">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://camo.githubusercontent.com/3845b9554e62650727fa7cae8f1c169060b879f7/68747470733a2f2f636e2e7675656a732e6f72672f696d616765732f646174612e706e67">
+<meta property="og:image" content="https://camo.githubusercontent.com/db55af854af44f10b16053687c6c02d3d5ae4b98/68747470733a2f2f692e6c6f6c692e6e65742f323031372f30382f32372f353961323431396133633631372e706e67">
+<meta property="og:updated_time" content="2018-05-15T11:36:10.606Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="看了再也不怕面试官问vue（面试装逼大法）">
+<meta name="twitter:description" content="1.请你说下数据绑定（数据绑定原理）：  首先通过一次渲染操作触发Data的getter（这里保证只有视图中需要被用到的data才会触发getter）进行依赖收集，这时候其实Watcher与data可以看成一种被绑定的状态（实际上是data的闭包中有一个Deps订阅者，在修改的时候会通知所有的Watcher观察者），在data发生变化的时候会触发它的setter，setter通知Watcher，W">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/3845b9554e62650727fa7cae8f1c169060b879f7/68747470733a2f2f636e2e7675656a732e6f72672f696d616765732f646174612e706e67">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://akira.wang/vue算是很通俗的源码分析（面试装逼大法）/"/>
+
+
+
+
+
+  <title>看了再也不怕面试官问vue（面试装逼大法） | Akira</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -30px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/miku/miku.model.json",0.5)</script>
+  
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+		<a href="https://github.com/Akira0705"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Akira</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://akira.wang/vue算是很通俗的源码分析（面试装逼大法）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Akira">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Akira">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">看了再也不怕面试官问vue（面试装逼大法）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T19:33:05+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,453
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-请你说下数据绑定（数据绑定原理）："><a href="#1-请你说下数据绑定（数据绑定原理）：" class="headerlink" title="1.请你说下数据绑定（数据绑定原理）："></a>1.请你说下数据绑定（数据绑定原理）：</h2><p><img src="https://camo.githubusercontent.com/3845b9554e62650727fa7cae8f1c169060b879f7/68747470733a2f2f636e2e7675656a732e6f72672f696d616765732f646174612e706e67" alt="image"></p>
+<ul>
+<li>首先通过一次渲染操作触发Data的getter（这里保证只有视图中需要被用到的data才会触发getter）进行依赖收集，这时候其实Watcher与data可以看成一种被绑定的状态（实际上是data的闭包中有一个Deps订阅者，在修改的时候会通知所有的Watcher观察者），在data发生变化的时候会触发它的setter，setter通知Watcher，Watcher进行回调通知组件重新渲染的函数，之后根据diff算法来决定是否发生视图的更新。</li>
+</ul>
+<h3 id="初始化data（个人简化了的initData）"><a href="#初始化data（个人简化了的initData）" class="headerlink" title="初始化data（个人简化了的initData）"></a>初始化data（个人简化了的initData）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function initData (vm: Component) &#123;</div><div class="line">  /*得到data数据*/</div><div class="line">  let data = vm.$options.data</div><div class="line">  </div><div class="line">  /*遍历data，和props对象*/</div><div class="line">  const keys = Object.keys(data)</div><div class="line">  const props = vm.$options.props</div><div class="line">  let i = keys.length</div><div class="line"></div><div class="line">  //遍历data中的数据，且props和data没有key没有冲突</div><div class="line">  while (i--) &#123;</div><div class="line">      if (!(props &amp;&amp; hasOwn(props, keys[i]))) &#123; </div><div class="line">        proxy(vm, `_data`, keys[i])</div><div class="line">      &#125;    </div><div class="line">      /*这里是我们前面讲过的代理，将data上面的属性代理到了vm实例上*/</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  /*从这里开始我们要observe了，开始对数据进行绑定*/</div><div class="line">  observe(data, true /* asRootData */)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="initData函数主要做了两件事："><a href="#initData函数主要做了两件事：" class="headerlink" title="initData函数主要做了两件事："></a>initData函数主要做了两件事：</h4><ul>
+<li>_data上面的数据代理到vm实例上</li>
+<li>通过observe将所有数据变成observable</li>
+</ul>
+<h3 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/*添加代理*/</div><div class="line">export function proxy (target: Object, sourceKey: string, key: string) &#123;</div><div class="line">  sharedPropertyDefinition.get = function proxyGetter () &#123;</div><div class="line">    return this[sourceKey][key]</div><div class="line">  &#125;</div><div class="line">  sharedPropertyDefinition.set = function proxySetter (val) &#123;</div><div class="line">    this[sourceKey][key] = val</div><div class="line">  &#125;</div><div class="line">  Object.defineProperty(target, key, sharedPropertyDefinition)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>通过proxy函数将data上面的数据代理到vm上，这样就可以用app.text代替app._data.text了</li>
+</ul>
+<h3 id="Observe"><a href="#Observe" class="headerlink" title="Observe"></a>Observe</h3><ul>
+<li><p>Vue的响应式数据都会有一个<strong>ob</strong>的属性作为标记，里面存放了该属性的观察器，也就是Observer的实例，防止重复绑定。</p>
+</li>
+<li><p>Observer为数据加上响应式属性进行双向绑定。如果是对象则进行深度遍历，为每一个子对象都绑定上方法，如果是数组则为每一个成员都绑定上方法。</p>
+</li>
+</ul>
+<h3 id="Watcher"><a href="#Watcher" class="headerlink" title="Watcher"></a>Watcher</h3><ul>
+<li>Watcher是一个观察者对象。依赖收集以后Watcher对象会被保存在Deps中，数据变动的时候会由Deps通知Watcher实例，然后由Watcher实例回调cb进行视图的更新。</li>
+</ul>
+<h3 id="Dep"><a href="#Dep" class="headerlink" title="Dep"></a>Dep</h3><ul>
+<li>Dep是一个发布者，可以订阅多个观察者，依赖收集之后Deps中会存在一个或多个Watcher对象，在数据变更的时候通知所有的Watcher。</li>
+</ul>
+<h3 id="defineReactive"><a href="#defineReactive" class="headerlink" title="defineReactive"></a>defineReactive</h3><h2 id="defineReactive的作用是通过Object-defineProperty为数据定义上getter-setter方法，进行依赖收集后闭包中的Deps会存放Watcher对象。触发setter改变数据的时候会通知Deps订阅者通知所有的Watcher观察者对象进行试图的更新。"><a href="#defineReactive的作用是通过Object-defineProperty为数据定义上getter-setter方法，进行依赖收集后闭包中的Deps会存放Watcher对象。触发setter改变数据的时候会通知Deps订阅者通知所有的Watcher观察者对象进行试图的更新。" class="headerlink" title="- defineReactive的作用是通过Object.defineProperty为数据定义上getter\setter方法，进行依赖收集后闭包中的Deps会存放Watcher对象。触发setter改变数据的时候会通知Deps订阅者通知所有的Watcher观察者对象进行试图的更新。 "></a>- defineReactive的作用是通过Object.defineProperty为数据定义上getter\setter方法，进行依赖收集后闭包中的Deps会存放Watcher对象。触发setter改变数据的时候会通知Deps订阅者通知所有的Watcher观察者对象进行试图的更新。 </h2><h2 id="2-小伙子，说下虚拟dom："><a href="#2-小伙子，说下虚拟dom：" class="headerlink" title="2.小伙子，说下虚拟dom："></a>2.小伙子，说下虚拟dom：</h2><ul>
+<li><p>咳咳，一般来说，我们要修改试图的话需要直接操作dom执行各种事件才行，是应用一大就会变得难以维护。</p>
+</li>
+<li><p>vnode就是把真实dom都抽象成一颗以js对象构成的抽象树，在修改抽象树的数据后将抽象树转换成真实dom重绘到页面上去。</p>
+</li>
+<li><p>，当某个抽象树的某个数据被修改的时候，set方法会让闭包中的Dep调用notify通知所有订阅者Watcher，Watcher通过get方法执行vm._update(vm._render(),hydrating)</p>
+</li>
+<li>经过diff算法只需要修改抽象树修改了的部分即可，相对于一大片的HTML修改，大大提高了性能。</li>
+<li>Vue使用了这样的抽象节点VNode，它是对真实DOM的一层抽象，所以它不依赖某个平台，比如weex</li>
+</ul>
+<h2 id="3-那diff算法你知道怎么运作的吗？"><a href="#3-那diff算法你知道怎么运作的吗？" class="headerlink" title="3.那diff算法你知道怎么运作的吗？"></a>3.那diff算法你知道怎么运作的吗？</h2><ul>
+<li>diff算法在patch方法内，path将通过新老Vnode节点的对比，根据两者的比较结果进行最小单位地修改视图，而不是将整个视图根据Vnode重绘。</li>
+<li>diff算法是通过同层的树节点进行比较而非对树进行逐层搜索遍历的方式，所以时间复杂度是O（n），是非常高效的算法。</li>
+<li><p><img src="https://camo.githubusercontent.com/db55af854af44f10b16053687c6c02d3d5ae4b98/68747470733a2f2f692e6c6f6c692e6e65742f323031372f30382f32372f353961323431396133633631372e706e67" alt="image"></p>
+</li>
+<li><p>这张图代表旧的VNode与新VNode进行patch的过程，他们只是在同层级的VNode之间进行比较得到变化（第二张图中相同颜色的方块代表互相进行比较的VNode节点）</p>
+</li>
+</ul>
+<h2 id="4-使用v-for进行列表渲染的时候，加-key的效果是什么，为什么会这样？"><a href="#4-使用v-for进行列表渲染的时候，加-key的效果是什么，为什么会这样？" class="headerlink" title="4.使用v-for进行列表渲染的时候，加:key的效果是什么，为什么会这样？"></a>4.使用v-for进行列表渲染的时候，加:key的效果是什么，为什么会这样？</h2><ul>
+<li>效果是更高效的更新虚拟dom。</li>
+<li>数据更新后，新老Vnode如果是同一节点，就会直接修改现有的节点，否则就是创建新的dom，移除旧的dom</li>
+<li><p>判断两个Vnode节点是否是同一节点，需要满足：</p>
+<ul>
+<li>==key相同==</li>
+<li>tag（当前节点的标签名）相同</li>
+<li>isComment（是否为注释节点）相同</li>
+<li>是否data（当前节点对应的对象，包含了具体的一些数据信息，是一个VNodeData类型，可以参考VNodeData类型中的数据信息）都有定义</li>
+<li>当标签是<input>的时候，type必须相同</li>
+</ul>
+</li>
+<li><p>所以，这就是为什么尽可能在使用 v-for 时提供key</p>
+</li>
+</ul>
+<h2 id="延伸：-更新虚拟dom的规则是这样："><a href="#延伸：-更新虚拟dom的规则是这样：" class="headerlink" title="延伸： 更新虚拟dom的规则是这样："></a>延伸： 更新虚拟dom的规则是这样：</h2><p>1.如果新旧VNode都是静态的，同时它们的key相同（代表同一节点），并且新的VNode是clone或者是标记了once（标记v-once属性，只渲染一次），那么只需要替换elm以及componentInstance即可。</p>
+<p>2.新老节点均有children子节点，则对子节点进行diff操作，调用updateChildren，这个updateChildren也是diff的核心。</p>
+<p>3.如果老节点没有子节点而新节点存在子节点，先清空老节点DOM的文本内容，然后为当前DOM节点加入子节点。</p>
+<p>4.当新节点没有子节点而老节点有子节点的时候，则移除该DOM节点的所有子节点。</p>
+<p>5.当新老节点都无子节点的时候，只是文本的替换。</p>
+
+      
+    </div>
+	
+	<div>
+	  
+	    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束感谢您的阅读-------------</div>
+    
+</div>
+	  
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018.5.15 怎么这么难受做的~~ QAQ/" rel="next" title="2018.5.15 怎么这么难受做的~~ QAQ">
+                <i class="fa fa-chevron-left"></i> 2018.5.15 怎么这么难受做的~~ QAQ
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+         <!--MOB SHARE BEGIN-->
+    <div class="-mob-share-ui-button -mob-share-open">分享</div>
+                                <div class="-mob-share-ui" style="display: none">
+                                    <ul class="-mob-share-list">
+                                        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+                                        <li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>
+                                        <li class="-mob-share-qzone"><p>QQ空间</p></li>
+                                        <li class="-mob-share-qq"><p>QQ好友</p></li>
+                                        <li class="-mob-share-weixin"><p>微信</p></li>
+                                        <li class="-mob-share-douban"><p>豆瓣</p></li>
+                                        <li class="-mob-share-renren"><p>人人网</p></li>
+                                        <li class="-mob-share-kaixin"><p>开心网</p></li>
+                                        <li class="-mob-share-facebook"><p>Facebook</p></li>
+                                        <li class="-mob-share-twitter"><p>Twitter</p></li>
+                                        <li class="-mob-share-pocket"><p>Pocket</p></li>
+                                        <li class="-mob-share-google"><p>Google+</p></li>
+                                        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+                                        <li class="-mob-share-mingdao"><p>明道</p></li>
+                                        <li class="-mob-share-pengyou"><p>朋友网</p></li>
+                                        <li class="-mob-share-tumblr"><p>Tumblr</p></li>
+                                        <li class="-mob-share-instapaper"><p>Instapaper</p></li>
+                                        <li class="-mob-share-linkedin"><p>LinkedIn</p></li>
+                                    </ul>
+                                    <div class="-mob-share-close">取消</div>
+                                </div>
+                                <div class="-mob-share-ui-bg"></div>
+                                <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=21b10bbc8adca"></script>
+                                <!--MOB SHARE END-->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Akira" />
+          <p class="site-author-name" itemprop="name">Akira</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-请你说下数据绑定（数据绑定原理）："><span class="nav-number">1.</span> <span class="nav-text">1.请你说下数据绑定（数据绑定原理）：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化data（个人简化了的initData）"><span class="nav-number">1.1.</span> <span class="nav-text">初始化data（个人简化了的initData）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#initData函数主要做了两件事："><span class="nav-number">1.1.1.</span> <span class="nav-text">initData函数主要做了两件事：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proxy"><span class="nav-number">1.2.</span> <span class="nav-text">proxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Observe"><span class="nav-number">1.3.</span> <span class="nav-text">Observe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Watcher"><span class="nav-number">1.4.</span> <span class="nav-text">Watcher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dep"><span class="nav-number">1.5.</span> <span class="nav-text">Dep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#defineReactive"><span class="nav-number">1.6.</span> <span class="nav-text">defineReactive</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#defineReactive的作用是通过Object-defineProperty为数据定义上getter-setter方法，进行依赖收集后闭包中的Deps会存放Watcher对象。触发setter改变数据的时候会通知Deps订阅者通知所有的Watcher观察者对象进行试图的更新。"><span class="nav-number">2.</span> <span class="nav-text">- defineReactive的作用是通过Object.defineProperty为数据定义上getter\setter方法，进行依赖收集后闭包中的Deps会存放Watcher对象。触发setter改变数据的时候会通知Deps订阅者通知所有的Watcher观察者对象进行试图的更新。 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-小伙子，说下虚拟dom："><span class="nav-number">3.</span> <span class="nav-text">2.小伙子，说下虚拟dom：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-那diff算法你知道怎么运作的吗？"><span class="nav-number">4.</span> <span class="nav-text">3.那diff算法你知道怎么运作的吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-使用v-for进行列表渲染的时候，加-key的效果是什么，为什么会这样？"><span class="nav-number">5.</span> <span class="nav-text">4.使用v-for进行列表渲染的时候，加:key的效果是什么，为什么会这样？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延伸：-更新虚拟dom的规则是这样："><span class="nav-number">6.</span> <span class="nav-text">延伸： 更新虚拟dom的规则是这样：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Akira</span>
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  1225658998@qq.com
+</div>
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+-->
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
