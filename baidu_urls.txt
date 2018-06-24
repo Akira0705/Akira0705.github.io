@@ -1,3 +1,4 @@
+http://akira.wang/实现可暂停异步任务队列的3种方式/
 http://akira.wang/vue算是很通俗的源码分析（面试装逼大法）/
 http://akira.wang/2018.5.15 怎么这么难受做的~~ QAQ/
 http://akira.wang/2018.5.11 或许前路永夜，即便如此我也要前进，因为星光即使微弱也会为我照亮前路。/
